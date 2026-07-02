@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Гроза — Карманный радар</title>
+  
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- MapLibre GL JS -->
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <!-- Контейнер для карты -->
+  <div id="map"></div>
+
+  <!-- Search bar for Nominatim -->
+  <div class="search-container">
+    <input type="text" id="search-input" placeholder="Введите город..." aria-label="Поиск города">
+    <button id="btn-search" aria-label="Искать">🔍</button>
+  </div>
+
+  <!-- Crosshair for manual selection -->
+  <div class="crosshair hidden" id="crosshair">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF7575" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="16"></line>
+      <line x1="8" y1="12" x2="16" y2="12"></line>
+    </svg>
+  </div>
+
+  <!-- Плавающий HUD поверх карты -->
+  <div class="hud-controls">
+    <button id="btn-center" class="fab-btn" aria-label="Центрировать на мне">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2M12 20v2M2 12h2M20 12h2M12 18a6 6 0 100-12 6 6 0 000 12z"/></svg>
+    </button>
+    <div class="zoom-controls">
+      <button id="btn-zoom-in" class="fab-btn zoom-btn" aria-label="Увеличить">+</button>
+      <button id="btn-zoom-out" class="fab-btn zoom-btn" aria-label="Уменьшить">−</button>
+    </div>
+    <button id="btn-safety" class="fab-btn safety-btn" aria-label="Правила безопасности">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </button>
+  </div>
+
+  <!-- Confirm Location Button (shown when manually selecting) -->
+  <button id="btn-confirm-location" class="primary-btn hidden" style="position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); width: calc(100% - 48px); z-index: 10;">
+    Подтвердить локацию
+  </button>
+
+  <!-- Выдвижная панель безопасности (Bottom Sheet) -->
+  <div id="safety-sheet" class="bottom-sheet hidden">
+    <div class="sheet-handle"></div>
+    <div class="sheet-content">
+      <h2>НА ВОДЕ — КРИТИЧЕСКИ ОПАСНО</h2>
+      <ul>
+        <li>Немедленно выйдите из воды (вода — идеальный проводник).</li>
+        <li>Отойдите от берега минимум на 100 метров.</li>
+        <li>Не прячьтесь под одиночными деревьями.</li>
+        <li>Лягте в низину в позе эмбриона.</li>
+      </ul>
+      <button id="btn-close-sheet" class="primary-btn">Понятно</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

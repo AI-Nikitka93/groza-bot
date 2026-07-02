@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: groza-bot
+    env: node
+    buildCommand: npm install && npx tsc
+    startCommand: npm start
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: WEBAPP_URL
+        sync: false
+      - key: OPENWEATHER_API_KEY
+        sync: false
+      - key: IMGUR_CLIENT_ID
+        sync: false
+      - key: THREADS_USER_ID
+        sync: false
+      - key: THREADS_ACCESS_TOKEN
+        sync: false

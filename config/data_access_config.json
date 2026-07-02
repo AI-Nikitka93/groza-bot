@@ -1,0 +1,53 @@
+{
+  "lightning_sources": {
+    "primary": {
+      "provider": "blitzortung",
+      "type": "websocket",
+      "architecture": "single_mqtt_proxy_worker",
+      "latency_target_sec": 10,
+      "commercial_use": false
+    },
+    "blocked": [
+      "rainviewer",
+      "openweather",
+      "wwlln",
+      "noaa_glm_raw"
+    ]
+  },
+  "broadcasting": {
+    "threads": {
+      "enabled": true,
+      "max_posts_per_day": 250,
+      "requires_public_image_url": true,
+      "anti_spam_randomization_required": true
+    },
+    "telegram": {
+      "enabled": true,
+      "type": "fallback_and_push",
+      "rate_limit_per_sec": 30
+    }
+  },
+  "infrastructure": {
+    "database": {
+      "provider": "tembo",
+      "extensions": ["postgis", "pgpointcloud"],
+      "max_storage_mb": 10000,
+      "indexing": "BRIN",
+      "compression_strategy": "MULTIPOINT_quantization"
+    },
+    "cache_queue": {
+      "provider": "upstash_redis",
+      "max_commands_per_month": 500000,
+      "deduplication_ttl_sec": 1800
+    },
+    "worker": {
+      "primary": "serv00",
+      "fallback": "huggingface_spaces",
+      "type": "always_on_single_instance"
+    }
+  },
+  "alerting": {
+    "max_latency_sec": 90,
+    "user_cooldown_sec": 1800
+  }
+}
