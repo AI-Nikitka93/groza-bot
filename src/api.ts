@@ -5,9 +5,24 @@ import { getRecentStrikes } from './alerting/store';
 import { ENV } from './env';
 import { incrementRequestCount, getRequestCountForPeriod } from './cache/upstash';
 import { insertErrorLog, getErrorsCount, getRecentErrors } from './db/tembo';
+import { bot } from './bot';
 
 export function startApiServer() {
   const app = express();
+  
+  const isProd = process.env.NODE_ENV === 'production' || (ENV.WEBAPP_URL && ENV.WEBAPP_URL.includes('alwaysdata.net'));
+  if (isProd && ENV.TELEGRAM_BOT_TOKEN) {
+    const botId = ENV.TELEGRAM_BOT_TOKEN.split(':')[0];
+    const webhookPath = `/api/telegram-webhook-${botId}`;
+    const webhookUrl = `${ENV.WEBAPP_URL.replace('/index.html', '')}${webhookPath}`;
+    
+    // Подключаем webhook callback от telegraf (без проверки пути внутри Telegraf, так как путь проверяется самим Express)
+    app.use(webhookPath, bot.webhookCallback());
+    
+    bot.telegram.setWebhook(webhookUrl)
+      .then(() => console.log(`Telegram webhook successfully set to: ${webhookUrl}`))
+      .catch(err => console.error('Failed to set Telegram webhook:', err));
+  }
   
   // Ограничиваем CORS доверенным WebApp URL и localhost для разработки
   app.use(cors({

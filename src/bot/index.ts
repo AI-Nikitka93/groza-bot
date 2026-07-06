@@ -46,7 +46,14 @@ bot.on('location', handleLocation);
 bot.on('web_app_data', handleWebAppData);
 
 export async function startBot() {
+  const isProd = process.env.NODE_ENV === 'production' || (ENV.WEBAPP_URL && ENV.WEBAPP_URL.includes('alwaysdata.net'));
+  
   if (ENV.TELEGRAM_BOT_TOKEN) {
+    if (isProd) {
+      console.log('Telegram bot is running in WEBHOOK mode on Alwaysdata.');
+      return;
+    }
+
     console.log('Starting Telegram bot...');
     try {
       await bot.launch({ dropPendingUpdates: true });

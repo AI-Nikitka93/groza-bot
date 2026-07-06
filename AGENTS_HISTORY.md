@@ -122,4 +122,10 @@
 - Verification: Запущена проверка типов с помощью `npx tsc --noEmit` и тесты через `npm test` (все проверки успешны, EXIT CODE 0).
 - Status: DONE
 
+## 2026-07-06 15:37:00 +03:00 — Исправление бага вебхука Telegram (ошибка 404 в Express)
+- Changed: Убран аргумент `webhookPath` из вызова `bot.webhookCallback()`. Поскольку Express сопоставляет запрос и передает управление в middleware `bot.webhookCallback`, он обрезает префикс `webhookPath` из `req.url` (устанавливая его в `/`). Удаление аргумента отключает внутреннюю валидацию пути внутри Telegraf, так как Express уже произвел валидацию пути.
+- Files: [src/api.ts](file:///M:/Projects/Bot/Groza/src/api.ts)
+- Verification: Успешно пройдены все 14 тестов (`npm test`, EXIT CODE 0) и проверка типов (`npx tsc --noEmit`, EXIT CODE 0).
+- Status: DONE
+
 
