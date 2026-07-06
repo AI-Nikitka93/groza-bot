@@ -4,14 +4,40 @@ import { handleStart } from './handlers/onboarding';
 import { handleLocation } from './handlers/location';
 import { handleWebAppData } from './handlers/webapp';
 import { handleStats } from './handlers/stats';
+import { incrementRequestCount } from '../cache/upstash';
+import { getUserLocation, insertErrorLog } from '../db/tembo';
 
 // Mock token if not provided for build passing
 const token = ENV.TELEGRAM_BOT_TOKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11';
 export const bot = new Telegraf(token);
 
+// Глобальный middleware для инкрементирования счетчика входящих запросов бота при каждом апдейте
+bot.use((ctx, next) => {
+  incrementRequestCount('bot').catch(console.error);
+  return next();
+});
+
 // Глобальный обработчик ошибок Telegraf, предотвращающий падение процесса при ошибках обработки обновлений
-bot.catch((err: any, ctx) => {
+bot.catch(async (err: any, ctx) => {
   console.error(`Telegraf error occurred for update ${ctx.update.update_id}:`, err);
+  try {
+    const userId = ctx.from?.id;
+    let location: { lat: number, lon: number } | null = null;
+    if (userId) {
+      location = await getUserLocation(userId);
+    }
+    await insertErrorLog(
+      'bot',
+      err.name || 'Error',
+      err.message || 'Unknown bot error',
+      err.stack,
+      location?.lat,
+      location?.lon,
+      userId
+    );
+  } catch (dbErr) {
+    console.error('Failed to log bot error to database:', dbErr);
+  }
 });
 
 bot.start(handleStart);
