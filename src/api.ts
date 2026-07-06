@@ -161,12 +161,15 @@ export function startApiServer() {
     });
   });
 
-  const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-  const HOST = process.env.IP || '0.0.0.0';
+  const PORT = process.env.PORT || 3000;
   
-  const server = app.listen(PORT, HOST, () => {
-    console.log(`API and Static server running on ${HOST}:${PORT}`);
-  });
+  const server = typeof PORT === 'string' && isNaN(Number(PORT))
+    ? app.listen(PORT, () => {
+        console.log(`API and Static server running on socket ${PORT}`);
+      })
+    : app.listen(Number(PORT), process.env.IP || '0.0.0.0', () => {
+        console.log(`API and Static server running on ${process.env.IP || '0.0.0.0'}:${PORT}`);
+      });
 
   // Настройка таймаутов для защиты от атак типа Slowloris (медленная передача заголовков)
   server.keepAliveTimeout = 65000;
