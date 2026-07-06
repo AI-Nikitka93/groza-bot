@@ -3,6 +3,8 @@ import cors from 'cors';
 import path from 'path';
 import { getRecentStrikes } from './alerting/store';
 import { ENV } from './env';
+import { incrementRequestCount, getRequestCountForPeriod } from './cache/upstash';
+import { insertErrorLog, getErrorsCount, getRecentErrors } from './db/tembo';
 
 export function startApiServer() {
   const app = express();
@@ -11,6 +13,12 @@ export function startApiServer() {
   app.use(cors({
     origin: ENV.WEBAPP_URL ? [ENV.WEBAPP_URL, /http:\/\/(localhost|127\.0\.0\.1):\d+/] : '*'
   }));
+
+  // Подсчет API запросов
+  app.use((req, res, next) => {
+    incrementRequestCount('api').catch(console.error);
+    next();
+  });
   
   // Простой in-memory Rate Limiting для защиты API эндпоинтов от флуда
   const ipRequestCounts = new Map<string, { count: number, resetTime: number }>();
@@ -44,6 +52,115 @@ export function startApiServer() {
     res.json({ strikes });
   });
 
+  // Эндпоинт для мониторинга статистики
+  app.get('/api/monitoring/stats', async (req, res, next) => {
+    try {
+      let hours = 24;
+      if (req.query.hours) {
+        const parsed = parseInt(String(req.query.hours), 10);
+        if (!isNaN(parsed)) {
+          hours = Math.min(Math.max(parsed, 1), 48);
+        }
+      }
+      
+      let lat: number | undefined = undefined;
+      let lon: number | undefined = undefined;
+      if (req.query.lat) {
+        const parsed = parseFloat(String(req.query.lat));
+        if (!isNaN(parsed)) lat = parsed;
+      }
+      if (req.query.lon) {
+        const parsed = parseFloat(String(req.query.lon));
+        if (!isNaN(parsed)) lon = parsed;
+      }
+      if (lat !== undefined && (isNaN(lat) || lat < -90 || lat > 90)) {
+        lat = undefined;
+      }
+      if (lon !== undefined && (isNaN(lon) || lon < -180 || lon > 180)) {
+        lon = undefined;
+      }
+      if (lat === undefined || lon === undefined) {
+        lat = undefined;
+        lon = undefined;
+      }
+      
+      let radius = 100000;
+      if (req.query.radius) {
+        const parsed = parseFloat(String(req.query.radius));
+        if (!isNaN(parsed) && parsed > 0) {
+          radius = parsed;
+        }
+      }
+      
+      const [requestsApi, requestsBot, errorsApi, errorsBot, recentErrors] = await Promise.all([
+        getRequestCountForPeriod('api', hours),
+        getRequestCountForPeriod('bot', hours),
+        getErrorsCount('api', hours, lat, lon, radius),
+        getErrorsCount('bot', hours, lat, lon, radius),
+        getRecentErrors(hours, 50, lat, lon, radius)
+      ]);
+      
+      const errorRateApi = requestsApi > 0 ? Number(((errorsApi / requestsApi) * 100).toFixed(2)) : 0;
+      const errorRateBot = requestsBot > 0 ? Number(((errorsBot / requestsBot) * 100).toFixed(2)) : 0;
+      
+      res.json({
+        api: { requests: requestsApi, errors: errorsApi, errorRate: errorRateApi },
+        bot: { requests: requestsBot, errors: errorsBot, errorRate: errorRateBot },
+        recentErrors
+      });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // Глобальное middleware обработки ошибок
+  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const rawLat = req.query.lat || req.headers['x-user-latitude'];
+    const rawLon = req.query.lon || req.headers['x-user-longitude'];
+    
+    let latNum: number | undefined = undefined;
+    let lonNum: number | undefined = undefined;
+    
+    if (rawLat !== undefined && rawLat !== null) {
+      const parsed = parseFloat(String(rawLat));
+      if (!isNaN(parsed) && parsed >= -90 && parsed <= 90) {
+        latNum = parsed;
+      }
+    }
+    if (rawLon !== undefined && rawLon !== null) {
+      const parsed = parseFloat(String(rawLon));
+      if (!isNaN(parsed) && parsed >= -180 && parsed <= 180) {
+        lonNum = parsed;
+      }
+    }
+    
+    const rawUserId = req.headers['x-user-id'] || req.query.userId || req.query.user_id || (req.body && (req.body.userId || req.body.user_id));
+    let userIdNum: number | undefined = undefined;
+    if (rawUserId !== undefined && rawUserId !== null) {
+      const parsed = parseInt(String(rawUserId), 10);
+      if (!isNaN(parsed)) {
+        userIdNum = parsed;
+      }
+    }
+    
+    insertErrorLog(
+      'api',
+      err.name || 'Error',
+      err.message || 'Unknown error',
+      err.stack,
+      latNum,
+      lonNum,
+      userIdNum
+    ).catch(dbErr => {
+      console.error('Failed to log error to database:', dbErr);
+    });
+    
+    res.status(500).json({
+      error: 'Internal Server Error',
+      message: err.message || 'An unexpected error occurred'
+    });
+  });
+
   const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
   const HOST = process.env.IP || '0.0.0.0';
   
@@ -58,3 +175,4 @@ export function startApiServer() {
 
   return server;
 }
+
