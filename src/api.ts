@@ -9,6 +9,24 @@ import { bot } from './bot';
 
 export function startApiServer() {
   const app = express();
+
+  // Диагностическое логирование запросов
+  app.use((req, res, next) => {
+    // @ts-ignore
+    const routes = app._router ? app._router.stack
+      // @ts-ignore
+      .map((r: any) => {
+        if (r.route) {
+          return `ROUTE: ${Object.keys(r.route.methods).join(',').toUpperCase()} ${r.route.path}`;
+        } else {
+          return `MIDDLEWARE: ${r.name || 'anonymous'} (${r.regexp ? r.regexp.toString() : ''})`;
+        }
+      })
+      : [];
+    console.log(`[HTTP-DEBUG] Incoming: ${req.method} ${req.url} (original: ${req.originalUrl})`);
+    console.log(`[HTTP-DEBUG] Express Stack: ${JSON.stringify(routes, null, 2)}`);
+    next();
+  });
   
   const isProd = process.env.NODE_ENV === 'production' || (ENV.WEBAPP_URL && ENV.WEBAPP_URL.includes('alwaysdata.net'));
   if (isProd && ENV.TELEGRAM_BOT_TOKEN) {
