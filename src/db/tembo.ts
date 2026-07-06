@@ -48,6 +48,38 @@ export async function initDatabase() {
       ON strikes (created_at);
     `);
 
+    // Создаем таблицу ошибок для логирования сбоев системы
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS errors (
+        id SERIAL PRIMARY KEY,
+        source VARCHAR(50) NOT NULL,
+        error_type VARCHAR(100),
+        message TEXT,
+        stack TEXT,
+        location GEOGRAPHY(Point, 4326),
+        user_id BIGINT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // GIST индекс на location
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_errors_location 
+      ON errors USING GIST (location);
+    `);
+
+    // B-tree индекс на created_at
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_errors_created_at 
+      ON errors (created_at);
+    `);
+
+    // B-tree индекс на source
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_errors_source 
+      ON errors (source);
+    `);
+
     console.log('Database initialized successfully.');
   } catch (error) {
     console.error('Error initializing database:', error);
@@ -155,4 +187,156 @@ export async function countStrikesNearUser(userId: number, radiusMeters: number 
   `;
   const countRes = await pool.query(query, [userLocation, radiusMeters]);
   return countRes.rows[0].count;
+}
+
+export async function getUserLocation(userId: number): Promise<{ lat: number, lon: number } | null> {
+  const query = `
+    SELECT ST_Y(location::geometry) as lat, ST_X(location::geometry) as lon
+    FROM users
+    WHERE id = $1;
+  `;
+  const res = await pool.query(query, [userId]);
+  if (res.rows.length === 0 || res.rows[0].lat == null || res.rows[0].lon == null) {
+    return null;
+  }
+  return {
+    lat: Number(res.rows[0].lat),
+    lon: Number(res.rows[0].lon)
+  };
+}
+
+export async function insertErrorLog(
+  source: string,
+  errorType: string,
+  message: string,
+  stack?: string,
+  lat?: number,
+  lon?: number,
+  userId?: number
+): Promise<void> {
+  let locationExpr = 'NULL';
+  const params: any[] = [source, errorType, message, stack || null, userId || null];
+
+  if (lat !== undefined && lon !== undefined && lat !== null && lon !== null) {
+    if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+      throw new Error('Invalid coordinates provided for error log');
+    }
+    locationExpr = 'ST_SetSRID(ST_MakePoint($6, $7), 4326)::geography';
+    params.push(lon, lat);
+  }
+
+  const query = `
+    INSERT INTO errors (source, error_type, message, stack, location, user_id)
+    VALUES ($1, $2, $3, $4, ${locationExpr}, $5);
+  `;
+  await pool.query(query, params);
+}
+
+export async function getErrorsCount(
+  source?: string,
+  hours?: number,
+  lat?: number,
+  lon?: number,
+  radiusMeters?: number
+): Promise<number> {
+  const conditions: string[] = [];
+  const params: any[] = [];
+
+  if (hours !== undefined && hours !== null) {
+    params.push(hours);
+    conditions.push(`created_at >= NOW() - ($${params.length} * INTERVAL '1 hour')`);
+  }
+
+  if (source !== undefined && source !== null) {
+    params.push(source);
+    conditions.push(`source = $${params.length}`);
+  }
+
+  if (
+    lat !== undefined && lat !== null &&
+    lon !== undefined && lon !== null &&
+    radiusMeters !== undefined && radiusMeters !== null
+  ) {
+    if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+      throw new Error('Invalid coordinates provided for error radius filter');
+    }
+    params.push(lon, lat, radiusMeters);
+    const lonIdx = params.length - 2;
+    const latIdx = params.length - 1;
+    const radIdx = params.length;
+    conditions.push(`ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
+  }
+
+  const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+  const query = `SELECT COUNT(*)::integer as count FROM errors ${whereClause};`;
+  const res = await pool.query(query, params);
+  return res.rows[0].count;
+}
+
+export async function getRecentErrors(
+  hours?: number,
+  limit?: number,
+  lat?: number,
+  lon?: number,
+  radiusMeters?: number
+): Promise<any[]> {
+  const conditions: string[] = [];
+  const params: any[] = [];
+
+  if (hours !== undefined && hours !== null) {
+    params.push(hours);
+    conditions.push(`created_at >= NOW() - ($${params.length} * INTERVAL '1 hour')`);
+  }
+
+  if (
+    lat !== undefined && lat !== null &&
+    lon !== undefined && lon !== null &&
+    radiusMeters !== undefined && radiusMeters !== null
+  ) {
+    if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+      throw new Error('Invalid coordinates provided for error radius filter');
+    }
+    params.push(lon, lat, radiusMeters);
+    const lonIdx = params.length - 2;
+    const latIdx = params.length - 1;
+    const radIdx = params.length;
+    conditions.push(`ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
+  }
+
+  const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+  
+  let limitClause = '';
+  if (limit !== undefined && limit !== null) {
+    params.push(limit);
+    limitClause = `LIMIT $${params.length}`;
+  }
+
+  const query = `
+    SELECT 
+      id, 
+      source, 
+      error_type, 
+      message, 
+      stack, 
+      ST_Y(location::geometry) as lat, 
+      ST_X(location::geometry) as lon, 
+      user_id, 
+      created_at
+    FROM errors
+    ${whereClause}
+    ORDER BY created_at DESC
+    ${limitClause};
+  `;
+  const res = await pool.query(query, params);
+  return res.rows.map(row => ({
+    id: row.id,
+    source: row.source,
+    error_type: row.error_type,
+    message: row.message,
+    stack: row.stack,
+    lat: row.lat !== null ? Number(row.lat) : null,
+    lon: row.lon !== null ? Number(row.lon) : null,
+    user_id: row.user_id !== null ? Number(row.user_id) : null,
+    created_at: row.created_at
+  }));
 }
