@@ -18,6 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="radar.css">
 </head>
 <body>
   
@@ -41,6 +42,14 @@
 
   <!-- Плавающий HUD поверх карты -->
   <div class="hud-controls">
+    <!-- Radar Timeline Controls -->
+    <div id="radar-controls" class="radar-controls hidden">
+      <div id="radar-time" class="radar-time">Загрузка...</div>
+      <button id="btn-radar-play" class="fab-btn radar-play-btn" aria-label="Play Radar">
+        ▶
+      </button>
+    </div>
+
     <button id="btn-center" class="fab-btn" aria-label="Центрировать на мне">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2M12 20v2M2 12h2M20 12h2M12 18a6 6 0 100-12 6 6 0 000 12z"/></svg>
     </button>

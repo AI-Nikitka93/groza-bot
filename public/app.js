@@ -16,30 +16,8 @@ let map;
 function initMap() {
   map = new maplibregl.Map({
     container: 'map',
-    // Свободный стиль CartoDB Dark Matter
-    style: {
-      version: 8,
-      sources: {
-        'cartodb-dark': {
-          type: 'raster',
-          tiles: [
-            'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
-            'https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
-            'https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png'
-          ],
-          tileSize: 256
-        }
-      },
-      layers: [
-        {
-          id: 'cartodb-dark-layer',
-          type: 'raster',
-          source: 'cartodb-dark',
-          minzoom: 0,
-          maxzoom: 22
-        }
-      ]
-    },
+    // Свободный векторный стиль CartoDB Dark Matter
+    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
     center: userLocation,
     zoom: 12,
     attributionControl: false
@@ -95,7 +73,7 @@ function initMap() {
     });
 
     drawSafetyRings();
-    startPolling();
+    initRainViewer();
   });
 }
 
@@ -146,33 +124,95 @@ function drawSafetyRings() {
   }, 'user-marker');
 }
 
-// Опрос бэкенда
-async function pollStrikes() {
+// --- RainViewer Radar Logic ---
+let rvTimestamps = [];
+let rvCurrentIndex = 0;
+let rvAnimationInterval = null;
+let rvHost = "https://tilecache.rainviewer.com";
+let rvPath = "";
+const RADAR_COLORS = 2; // Color scheme (2 = Original)
+const RADAR_SMOOTH = 1; // 1 = smooth, 0 = pixelated
+const RADAR_SNOW = 1; // 1 = show snow
+
+async function initRainViewer() {
   try {
-    const res = await fetch('/api/strikes');
+    const res = await fetch('https://api.rainviewer.com/public/weather-maps.json');
     const data = await res.json();
+    rvHost = data.host;
+    rvPath = data.radar.past; // Get past radar timestamps
+    rvTimestamps = rvPath.map(f => f.time);
     
-    if (data && data.strikes) {
-      const features = data.strikes.map(s => ({
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: [s.lon, s.lat] },
-        properties: { timestamp: s.timestamp }
-      }));
+    // Use latest timestamp
+    rvCurrentIndex = rvTimestamps.length - 1;
+    
+    // Add layers for all timestamps, but hide them
+    rvTimestamps.forEach((ts, index) => {
+      const sourceId = `rv-source-${ts}`;
+      const layerId = `rv-layer-${ts}`;
       
-      map.getSource('strikes').setData({
-        type: 'FeatureCollection',
-        features
+      map.addSource(sourceId, {
+        type: 'raster',
+        tiles: [`${rvHost}${rvPath[index].path}/256/{z}/{x}/{y}/${RADAR_COLORS}/${RADAR_SMOOTH}_${RADAR_SNOW}.png`],
+        tileSize: 256
       });
-    }
+      
+      map.addLayer({
+        id: layerId,
+        type: 'raster',
+        source: sourceId,
+        layout: {
+          visibility: index === rvCurrentIndex ? 'visible' : 'none'
+        },
+        paint: {
+          'raster-opacity': 0.6
+        }
+      }, 'user-marker'); // Place below user marker
+    });
+    
+    // Show UI
+    document.getElementById('radar-controls').classList.remove('hidden');
+    updateRadarUI();
+    
+    // Start animation by default
+    toggleRadarAnimation();
   } catch (e) {
-    console.error('Polling error:', e);
+    console.error("RainViewer initialization error:", e);
   }
 }
 
-function startPolling() {
-  pollStrikes();
-  setInterval(pollStrikes, 10000); // 10s
+function updateRadarUI() {
+  const ts = rvTimestamps[rvCurrentIndex];
+  if (!ts) return;
+  const date = new Date(ts * 1000);
+  const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  document.getElementById('radar-time').innerText = timeStr;
+  
+  // Show current layer, hide others
+  rvTimestamps.forEach((t, i) => {
+    const layerId = `rv-layer-${t}`;
+    if (map.getLayer(layerId)) {
+      map.setLayoutProperty(layerId, 'visibility', i === rvCurrentIndex ? 'visible' : 'none');
+    }
+  });
 }
+
+function toggleRadarAnimation() {
+  const playBtn = document.getElementById('btn-radar-play');
+  if (rvAnimationInterval) {
+    clearInterval(rvAnimationInterval);
+    rvAnimationInterval = null;
+    playBtn.innerText = '▶';
+  } else {
+    playBtn.innerText = '⏸';
+    rvAnimationInterval = setInterval(() => {
+      rvCurrentIndex = (rvCurrentIndex + 1) % rvTimestamps.length;
+      updateRadarUI();
+    }, 1000); // 1 frame per second
+  }
+}
+
+document.getElementById('btn-radar-play').addEventListener('click', toggleRadarAnimation);
+// -----------------------------
 
 // Получение геолокации
 function getUserLocation() {

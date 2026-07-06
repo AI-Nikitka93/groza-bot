@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 import test from 'node:test';
 import assert from 'node:assert';
 import http from 'node:http';
@@ -9,9 +10,15 @@ tembo.upsertUserLocation = async (userId: number, lat: number, lon: number) => {
   if (lat == null || lon == null) throw new Error("Invalid coords");
   return Promise.resolve();
 };
+// @ts-ignore
+tembo.countStrikesNearUser = async (userId: number) => {
+  if (userId === 999) return null;
+  return 42; // Возвращаем 42 удара молнии для теста
+};
 
 import { handleStart } from '../src/bot/handlers/onboarding';
 import { handleLocation } from '../src/bot/handlers/location';
+import { handleStats } from '../src/bot/handlers/stats';
 import { startApiServer } from '../src/api';
 import { addStrikeToStore } from '../src/alerting/store';
 import { Context } from 'telegraf';
@@ -34,14 +41,15 @@ class MockTelegrafContext {
 
 test('Telegraf Context Mocks & Conversational Flow', async (t) => {
   
-  await t.test('Onboarding /start - should return value proposition and location request', async () => {
+  await t.test('Onboarding /start - should return value proposition and map keyboard', async () => {
     const ctx = new MockTelegrafContext() as unknown as Context;
     await handleStart(ctx);
     const mockCtx = ctx as unknown as MockTelegrafContext;
 
-    assert.strictEqual(mockCtx.replies.length, 1, 'Should have exactly 1 reply');
+    assert.strictEqual(mockCtx.replies.length, 2, 'Should have exactly 2 replies');
     assert.ok(mockCtx.replies[0].text.includes('Ваш карманный радар безопасности'), 'Missing value proposition');
-    assert.ok(mockCtx.replies[0].extra, 'Should have keyboard markup');
+    assert.ok(mockCtx.replies[0].extra, 'Should have location keyboard markup');
+    assert.ok(mockCtx.replies[1].text.includes('выберите точку на карте'), 'Missing map inline keyboard');
   });
 
   await t.test('Live Location Handler - valid coordinates', async () => {
@@ -78,6 +86,42 @@ test('Telegraf Context Mocks & Conversational Flow', async (t) => {
     assert.strictEqual(mockCtx.replies.length, 1, 'Should reply with error');
     assert.ok(mockCtx.replies[0].text.includes('Ошибка сохранения локации'), 'Should return error message for null coords');
   });
+
+  await t.test('Stats Handler - user not registered', async () => {
+    const ctx = new MockTelegrafContext() as unknown as Context;
+    // Подменяем ID пользователя на 999 (который у нас замокан как не имеющий геопозиции)
+    (ctx as any).from.id = 999;
+
+    const originalLog = console.log;
+    let loggedMsg = '';
+    console.log = (msg: string) => { loggedMsg = msg; };
+
+    await handleStats(ctx);
+    console.log = originalLog;
+
+    const mockCtx = ctx as unknown as MockTelegrafContext;
+
+    assert.strictEqual(mockCtx.replies.length, 1, 'Should reply with instruction');
+    assert.ok(mockCtx.replies[0].text.includes('Сначала отправьте свою геолокацию'), 'Should prompt for location');
+    assert.ok(loggedMsg.includes('[STATS-DEBUG]'), 'Log prefix should be [STATS-DEBUG]');
+  });
+
+  await t.test('Stats Handler - registered user returns count', async () => {
+    const ctx = new MockTelegrafContext() as unknown as Context;
+    
+    const originalLog = console.log;
+    let loggedMsg = '';
+    console.log = (msg: string) => { loggedMsg = msg; };
+
+    await handleStats(ctx);
+    console.log = originalLog;
+
+    const mockCtx = ctx as unknown as MockTelegrafContext;
+
+    assert.strictEqual(mockCtx.replies.length, 1, 'Should reply with stats');
+    assert.ok(mockCtx.replies[0].text.includes('За последние 24 часа зарегистрировано ударов молний: *42*'), 'Should return correct count');
+    assert.ok(loggedMsg.includes('[STATS-DEBUG]'), 'Log prefix should be [STATS-DEBUG]');
+  });
 });
 
 test('API Contract Verification (Express)', async (t) => {
@@ -95,10 +139,19 @@ test('API Contract Verification (Express)', async (t) => {
 
   await t.test('GET /api/strikes should return correct JSON and CORS headers', async () => {
     return new Promise((resolve, reject) => {
-      http.get('http://localhost:3001/api/strikes', (res) => {
+      const options = {
+        hostname: 'localhost',
+        port: 3001,
+        path: '/api/strikes',
+        headers: {
+          'Origin': 'http://localhost:3000'
+        }
+      };
+      
+      http.get(options, (res) => {
         try {
           assert.strictEqual(res.statusCode, 200, 'Status code must be 200');
-          assert.strictEqual(res.headers['access-control-allow-origin'], '*', 'CORS header missing');
+          assert.strictEqual(res.headers['access-control-allow-origin'], 'http://localhost:3000', 'CORS header missing or mismatch');
           
           let data = '';
           res.on('data', chunk => data += chunk);

@@ -2,6 +2,8 @@ import { config } from 'dotenv';
 
 config();
 
+const isTest = process.env.NODE_ENV === 'test';
+
 export const ENV = {
   TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '',
   DATABASE_URL: process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/groza',
@@ -13,3 +15,16 @@ export const ENV = {
   THREADS_ACCESS_TOKEN: process.env.THREADS_ACCESS_TOKEN || '',
   WEBAPP_URL: process.env.WEBAPP_URL || 'https://example.com',
 };
+
+// Fail-Fast валидация критических переменных окружения при запуске в продакшене/девелопменте
+if (!isTest) {
+  const missingVars: string[] = [];
+  if (!ENV.TELEGRAM_BOT_TOKEN) missingVars.push('TELEGRAM_BOT_TOKEN');
+  if (!ENV.DATABASE_URL) missingVars.push('DATABASE_URL');
+  if (!ENV.REDIS_URL) missingVars.push('REDIS_URL');
+  
+  if (missingVars.length > 0) {
+    console.error(`\x1b[31m[CRITICAL CONFIG ERROR] Missing required environment variables: ${missingVars.join(', ')}\x1b[0m`);
+    process.exit(1);
+  }
+}
