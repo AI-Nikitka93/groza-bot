@@ -16,8 +16,8 @@ export function startApiServer() {
     const webhookPath = `/api/telegram-webhook-${botId}`;
     const webhookUrl = `${ENV.WEBAPP_URL.replace('/index.html', '')}${webhookPath}`;
     
-    // Подключаем webhook callback от telegraf (без проверки пути внутри Telegraf, так как путь проверяется самим Express)
-    app.use(webhookPath, bot.webhookCallback());
+    // Подключаем webhook callback от telegraf глобально (Telegraf сам отфильтрует запросы по полному webhookPath)
+    app.use(bot.webhookCallback(webhookPath));
     
     bot.telegram.setWebhook(webhookUrl)
       .then(() => console.log(`Telegram webhook successfully set to: ${webhookUrl}`))
