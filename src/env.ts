@@ -1,6 +1,16 @@
 import { config } from 'dotenv';
+import path from 'path';
+import fs from 'fs';
 
-config();
+const localEnvPath = path.join(__dirname, '../.env');
+const distEnvPath = path.join(__dirname, 'config.env');
+
+const envPath = fs.existsSync(distEnvPath) ? distEnvPath : localEnvPath;
+
+const dotenvResult = config({ path: envPath });
+if (dotenvResult.error) {
+  console.error(`[ENV ERROR] Failed to load env from ${envPath}:`, dotenvResult.error.message);
+}
 
 const isTest = process.env.NODE_ENV === 'test';
 
