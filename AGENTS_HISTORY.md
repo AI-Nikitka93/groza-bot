@@ -116,3 +116,10 @@
 - Verification: Запущены тесты через `adwp_runner.ps1` с `npm test` (все 14 тестов пройдено успешно), выполнена проверка типов `npx tsc --noEmit` (EXIT CODE 0).
 - Status: DONE
 
+## 2026-07-06 11:25:00 +03:00 — Асинхронный запуск Telegram-бота
+- Changed: Изменен запуск `startBot()` в функции `bootstrap()` на асинхронный без `await` с обработкой ошибок через `.catch(console.error)`. Это предотвращает блокировку старта Express API-сервера и Blitzortung WS-слушателя в случае зависания подключения к Telegram API.
+- Files: `src/index.ts`
+- Verification: Запущена проверка типов с помощью `npx tsc --noEmit` и тесты через `npm test` (все проверки успешны, EXIT CODE 0).
+- Status: DONE
+
+

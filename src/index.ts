@@ -11,7 +11,7 @@ async function bootstrap() {
   await initDatabase();
   
   // 2. Start Telegram Bot
-  await startBot();
+  startBot().catch(console.error);
   
   // 3. Start real-time Blitzortung listener
   startLightningListener();
