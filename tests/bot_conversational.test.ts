@@ -175,6 +175,93 @@ test('API Contract Verification (Express)', async (t) => {
   server.close();
 });
 
+test('Monitoring & Statistics Verification', async (t) => {
+  const { incrementRequestCount, getRequestCountForPeriod } = require('../src/cache/upstash');
+  const { initDatabase, insertErrorLog, getErrorsCount, getRecentErrors } = require('../src/db/tembo');
+
+  // Ensure tables are created
+  await initDatabase();
+
+  await t.test('Test 1: Redis requests monitoring counters', async () => {
+    const oldCount = await getRequestCountForPeriod('bot', 1);
+    await incrementRequestCount('bot');
+    const newCount = await getRequestCountForPeriod('bot', 1);
+    assert.strictEqual(newCount, oldCount + 1, 'Bot request count should increase by exactly 1');
+  });
+
+  const randomMessage = `MockTestError-${Math.random().toString(36).substring(7)}`;
+
+  await t.test('Test 2: Error logging in PostgreSQL', async () => {
+    await insertErrorLog('bot', 'MockTestError', randomMessage, 'mock stack', 55.7558, 37.6173, 12345);
+    
+    const count = await getErrorsCount('bot', 1, 55.7558, 37.6173, 500);
+    assert.ok(count >= 1, 'Errors count in radius 500m should be >= 1');
+
+    const recent = await getRecentErrors(1, 10, 55.7558, 37.6173, 500);
+    const ourError = recent.find((e: any) => e.message === randomMessage);
+    assert.ok(ourError, 'Our error should be in the recent errors list');
+    assert.strictEqual(ourError.lat, 55.7558, 'Error latitude mismatch');
+    assert.strictEqual(ourError.lon, 37.6173, 'Error longitude mismatch');
+    assert.strictEqual(ourError.user_id, 12345, 'Error user_id mismatch');
+  });
+
+  await t.test('Test 3: API stats endpoint GET /api/monitoring/stats', async () => {
+    process.env.PORT = '3001';
+    // We mock console.log to avoid clutter
+    const originalLog = console.log;
+    console.log = () => {};
+    const server = startApiServer();
+    console.log = originalLog;
+
+    try {
+      await new Promise<void>((resolve, reject) => {
+        const options = {
+          hostname: 'localhost',
+          port: 3001,
+          path: '/api/monitoring/stats?hours=1&lat=55.7558&lon=37.6173&radius=5000',
+          headers: {
+            'Origin': 'http://localhost:3000'
+          }
+        };
+
+        http.get(options, (res) => {
+          try {
+            assert.strictEqual(res.statusCode, 200, 'Status code must be 200');
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+              try {
+                const parsed = JSON.parse(data);
+                
+                assert.ok(typeof parsed.api?.requests === 'number', 'api.requests must be a number');
+                assert.ok(typeof parsed.api?.errors === 'number', 'api.errors must be a number');
+                assert.ok(typeof parsed.api?.errorRate === 'number', 'api.errorRate must be a number');
+                
+                assert.ok(typeof parsed.bot?.requests === 'number', 'bot.requests must be a number');
+                assert.ok(typeof parsed.bot?.errors === 'number', 'bot.errors must be a number');
+                assert.ok(typeof parsed.bot?.errorRate === 'number', 'bot.errorRate must be a number');
+                
+                assert.ok(Array.isArray(parsed.recentErrors), 'recentErrors must be an array');
+                
+                const ourApiError = parsed.recentErrors.find((e: any) => e.message === randomMessage);
+                assert.ok(ourApiError, 'Our test error must be present in the stats API response recentErrors');
+                
+                resolve();
+              } catch (parseErr) {
+                reject(parseErr);
+              }
+            });
+          } catch (e) {
+            reject(e);
+          }
+        }).on('error', reject);
+      });
+    } finally {
+      server.close();
+    }
+  });
+});
+
 test('Cleanup resources', async () => {
   const { redis } = require('../src/cache/upstash');
   const { pool } = require('../src/db/tembo');
