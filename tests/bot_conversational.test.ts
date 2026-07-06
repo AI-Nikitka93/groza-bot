@@ -174,3 +174,10 @@ test('API Contract Verification (Express)', async (t) => {
   // Close the server so the Node process can exit
   server.close();
 });
+
+test('Cleanup resources', async () => {
+  const { redis } = require('../src/cache/upstash');
+  const { pool } = require('../src/db/tembo');
+  await redis.quit();
+  await pool.end();
+});
