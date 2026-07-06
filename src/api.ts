@@ -17,7 +17,7 @@ export function startApiServer() {
       // @ts-ignore
       .map((r: any) => {
         if (r.route) {
-          return `ROUTE: ${Object.keys(r.route.methods).join(',').toUpperCase()} ${r.route.path}`;
+          return `ROUTE: ${Object.keys(r.route.methods).join(',').toUpperCase()} ${r.route.path} (${r.regexp ? r.regexp.toString() : ''})`;
         } else {
           return `MIDDLEWARE: ${r.name || 'anonymous'} (${r.regexp ? r.regexp.toString() : ''})`;
         }
@@ -35,20 +35,42 @@ export function startApiServer() {
     const webhookUrl = `${ENV.WEBAPP_URL.replace('/index.html', '')}${webhookPath}`;
     
     // Ручная обработка вебхука Telegram без использования хрупкого bot.webhookCallback
-    app.post(webhookPath, express.json(), async (req, res) => {
+    app.post(webhookPath, async (req, res) => {
       console.log('[HTTP-DEBUG] WEBHOOK HANDLER ENTERED!');
       console.log('[HTTP-DEBUG] Request headers:', JSON.stringify(req.headers));
-      console.log('[HTTP-DEBUG] Request body:', JSON.stringify(req.body));
-      try {
-        // Передаем распарсенный апдейт напрямую в Telegraf
-        await bot.handleUpdate(req.body, res);
-        console.log('[HTTP-DEBUG] bot.handleUpdate completed successfully.');
-      } catch (err: any) {
-        console.error('[HTTP-DEBUG] Error handling Telegram update:', err);
-        if (!res.headersSent) {
-          res.sendStatus(500);
+      
+      let bodyData = '';
+      req.on('data', (chunk) => {
+        bodyData += chunk;
+      });
+      
+      req.on('end', async () => {
+        console.log('[HTTP-DEBUG] Body data read complete. Length:', bodyData.length);
+        console.log('[HTTP-DEBUG] Body content:', bodyData);
+        
+        let parsedBody: any = {};
+        try {
+          if (bodyData) {
+            parsedBody = JSON.parse(bodyData);
+          }
+        } catch (e: any) {
+          console.error('[HTTP-DEBUG] JSON parse error:', e.message);
         }
-      }
+        
+        try {
+          // Передаем распарсенный апдейт напрямую в Telegraf
+          await bot.handleUpdate(parsedBody, res);
+          console.log('[HTTP-DEBUG] bot.handleUpdate completed successfully.');
+          if (!res.headersSent) {
+            res.sendStatus(200);
+          }
+        } catch (err: any) {
+          console.error('[HTTP-DEBUG] Error handling Telegram update:', err);
+          if (!res.headersSent) {
+            res.sendStatus(500);
+          }
+        }
+      });
     });
     
     bot.telegram.setWebhook(webhookUrl)

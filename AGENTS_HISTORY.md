@@ -127,5 +127,16 @@
 - Files: [src/api.ts](file:///M:/Projects/Bot/Groza/src/api.ts)
 - Verification: Успешно пройдены все 14 тестов (`npm test`, EXIT CODE 0) и проверка типов (`npx tsc --noEmit`, EXIT CODE 0).
 - Status: DONE
-
-
+## 2026-07-06 16:23:00 +03:00 — Интеграция вебхука Telegram на Alwaysdata (config.env и ручной body-парсер)
+- Changed:
+  - Устранена проблема видимости скрытых файлов под Passenger на Alwaysdata: перевели загрузку переменных окружения в `src/env.ts` на `config.env`, размещаемый внутри `dist/` при сборке.
+  - Обновили `deploy-dist.js`, добавив SSH-копирование и защиту прав файла конфигурации (`cp ~/.env ~/dist/config.env && chmod 600 config.env`) и автоматический перезапуск Node-процессов.
+  - Обошли конфликт сокетов Passenger: заменили `express.json()` в обработчике вебхука `src/api.ts` на ручное поточное считывание тела запроса (`req.on('data')`, `req.on('end')`), что устранило ложные 404 ошибки.
+  - Реализовали отправку `res.sendStatus(200)` после успешной обработки обновлений ботом, предотвратив зависание и повторные отправки запросов со стороны Telegram API.
+- Files:
+  - [src/env.ts](file:///m:/Projects/Bot/Groza/src/env.ts)
+  - [src/api.ts](file:///m:/Projects/Bot/Groza/src/api.ts)
+  - [deploy-dist.js](file:///m:/Projects/Bot/Groza/deploy-dist.js)
+  - [.gitignore](file:///m:/Projects/Bot/Groza/.gitignore)
+- Verification: Локальные тесты `npm test` успешно пройдены (14/14). На сервере вебхук возвращает статус 200 OK, новые сообщения от пользователей успешно доставляются и обрабатываются без таймаутов и зависаний.
+- Status: DONE
