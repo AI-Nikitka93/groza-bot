@@ -2804,3 +2804,5 @@
 [05/Jul/2026:23:06:31 +0200] [upstream] [2458365] STDOUT: Starting Open-Meteo weather poller...
 [05/Jul/2026:23:06:32 +0200] [upstream] [2458365] STDOUT: Groza Single-Worker is running.
 [05/Jul/2026:23:06:32 +0200] [upstream] [2458365] STDOUT: API and Static server running on port 8100
+[05/Jul/2026:23:55:36 +0200] [upstream] [2458365] SIGTERM sent to upstream
+[05/Jul/2026:23:55:36 +0200] [upstream] [2458365] Upstream stopped (reason: idle)
