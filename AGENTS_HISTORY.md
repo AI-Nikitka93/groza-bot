@@ -140,3 +140,14 @@
   - [.gitignore](file:///m:/Projects/Bot/Groza/.gitignore)
 - Verification: Локальные тесты `npm test` успешно пройдены (14/14). На сервере вебхук возвращает статус 200 OK, новые сообщения от пользователей успешно доставляются и обрабатываются без таймаутов и зависаний.
 - Status: DONE
+
+## 2026-07-06 16:25:00 +03:00 — Исправление кнопки выбора локации на карте (tg.sendData)
+- Changed:
+  - Исправили работу кнопки "Подтвердить локацию" внутри WebApp-карты: перенесли кнопку запуска карты из `Markup.inlineKeyboard` в общую Reply-клавиатуру `Markup.keyboard` в `src/bot/handlers/onboarding.ts`. Telegram API блокирует метод `tg.sendData()` для WebApp, запущенных из инлайн-кнопок, перенос в обычную клавиатуру восстановил работоспособность.
+  - Добавили метод `.trim()` для всех строковых свойств объекта `ENV` в `src/env.ts` для автоматической очистки скрытых символов `\r` (carriage return), возникающих при CRLF-кодировании.
+- Files:
+  - [src/bot/handlers/onboarding.ts](file:///m:/Projects/Bot/Groza/src/bot/handlers/onboarding.ts)
+  - [src/env.ts](file:///m:/Projects/Bot/Groza/src/env.ts)
+- Verification: Запущены тесты `npm test` (все 14 тестов пройдены успешно, EXIT CODE 0). Выполнен деплой и перезапуск Passenger. Бот стабильно отвечает на `/start`, открывает карту и успешно принимает выбранные координаты.
+- Status: DONE
+
