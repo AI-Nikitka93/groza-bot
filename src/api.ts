@@ -16,8 +16,18 @@ export function startApiServer() {
     const webhookPath = `/api/telegram-webhook-${botId}`;
     const webhookUrl = `${ENV.WEBAPP_URL.replace('/index.html', '')}${webhookPath}`;
     
-    // Подключаем webhook callback от telegraf глобально (Telegraf сам отфильтрует запросы по полному webhookPath)
-    app.use(bot.webhookCallback(webhookPath));
+    // Ручная обработка вебхука Telegram без использования хрупкого bot.webhookCallback
+    app.post(webhookPath, express.json(), async (req, res) => {
+      try {
+        // Передаем распарсенный апдейт напрямую в Telegraf
+        await bot.handleUpdate(req.body, res);
+      } catch (err) {
+        console.error('Error handling Telegram update:', err);
+        if (!res.headersSent) {
+          res.sendStatus(500);
+        }
+      }
+    });
     
     bot.telegram.setWebhook(webhookUrl)
       .then(() => console.log(`Telegram webhook successfully set to: ${webhookUrl}`))
