@@ -36,11 +36,15 @@ export function startApiServer() {
     
     // Ручная обработка вебхука Telegram без использования хрупкого bot.webhookCallback
     app.post(webhookPath, express.json(), async (req, res) => {
+      console.log('[HTTP-DEBUG] WEBHOOK HANDLER ENTERED!');
+      console.log('[HTTP-DEBUG] Request headers:', JSON.stringify(req.headers));
+      console.log('[HTTP-DEBUG] Request body:', JSON.stringify(req.body));
       try {
         // Передаем распарсенный апдейт напрямую в Telegraf
         await bot.handleUpdate(req.body, res);
-      } catch (err) {
-        console.error('Error handling Telegram update:', err);
+        console.log('[HTTP-DEBUG] bot.handleUpdate completed successfully.');
+      } catch (err: any) {
+        console.error('[HTTP-DEBUG] Error handling Telegram update:', err);
         if (!res.headersSent) {
           res.sendStatus(500);
         }
