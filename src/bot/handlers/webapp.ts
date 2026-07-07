@@ -12,7 +12,9 @@ export async function handleWebAppData(ctx: Context) {
   try {
     const data = JSON.parse(webAppData);
     if (data.lat !== undefined && data.lon !== undefined) {
-      await upsertUserLocation(userId, data.lat, data.lon);
+      const lat = Number(data.lat);
+      const lon = Number(data.lon);
+      await upsertUserLocation(userId, lat, lon);
       await ctx.reply('✅ Локация сохранена. Радар активирован. Мы уведомими вас, если гроза окажется в радиусе 15 км.', Markup.removeKeyboard());
     } else {
       await ctx.reply('❌ Ошибка: получены неверные данные от карты.');

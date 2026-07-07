@@ -27,6 +27,13 @@ export async function initDatabase() {
       ON users USING GIST (location);
     `);
 
+    // Миграция со старой схемы (geometry -> geography), если требуется
+    try {
+      await client.query(`ALTER TABLE users ALTER COLUMN location TYPE GEOGRAPHY(Point, 4326) USING location::geography;`);
+    } catch (e: any) {
+      console.log('Migration geometry -> geography not needed or failed', e.message);
+    }
+
     // Создаем таблицу для долгосрочного хранения ударов молний (статистика за 24 часа)
     await client.query(`
       CREATE TABLE IF NOT EXISTS strikes (

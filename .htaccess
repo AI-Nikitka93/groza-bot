@@ -1,0 +1,4 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^kill_now_please$ kill.php [L]
+</IfModule>

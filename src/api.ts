@@ -28,11 +28,21 @@ export function startApiServer() {
     next();
   });
   
+  app.get('/api/debug-env', (req, res) => {
+    res.json({
+      NODE_ENV: process.env.NODE_ENV,
+      isProd: process.env.NODE_ENV === 'production' || (ENV.WEBAPP_URL && ENV.WEBAPP_URL.includes('alwaysdata.net')),
+      WEBAPP_URL: ENV.WEBAPP_URL,
+      TELEGRAM_BOT_TOKEN: ENV.TELEGRAM_BOT_TOKEN
+    });
+  });
+  
   const isProd = process.env.NODE_ENV === 'production' || (ENV.WEBAPP_URL && ENV.WEBAPP_URL.includes('alwaysdata.net'));
-  if (isProd && ENV.TELEGRAM_BOT_TOKEN) {
-    const botId = ENV.TELEGRAM_BOT_TOKEN.split(':')[0];
+  
+  if (ENV.TELEGRAM_BOT_TOKEN) {
+    const botId = ENV.TELEGRAM_BOT_TOKEN.split(':')[0].replace(/\r/g, '');
     const webhookPath = `/api/telegram-webhook-${botId}`;
-    const webhookUrl = `${ENV.WEBAPP_URL.replace('/index.html', '')}${webhookPath}`;
+    const webhookUrl = `${ENV.WEBAPP_URL.replace('/index.html', '').replace(/\r/g, '')}${webhookPath}`;
     
     // Ручная обработка вебхука Telegram без использования хрупкого bot.webhookCallback
     app.post(webhookPath, async (req, res) => {

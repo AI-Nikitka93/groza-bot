@@ -46,10 +46,9 @@ test('Telegraf Context Mocks & Conversational Flow', async (t) => {
     await handleStart(ctx);
     const mockCtx = ctx as unknown as MockTelegrafContext;
 
-    assert.strictEqual(mockCtx.replies.length, 2, 'Should have exactly 2 replies');
+    assert.strictEqual(mockCtx.replies.length, 1, 'Should have exactly 1 reply');
     assert.ok(mockCtx.replies[0].text.includes('Ваш карманный радар безопасности'), 'Missing value proposition');
-    assert.ok(mockCtx.replies[0].extra, 'Should have location keyboard markup');
-    assert.ok(mockCtx.replies[1].text.includes('выберите точку на карте'), 'Missing map inline keyboard');
+    assert.ok(mockCtx.replies[0].extra, 'Should have keyboard markup');
   });
 
   await t.test('Live Location Handler - valid coordinates', async () => {

@@ -15,15 +15,15 @@ if (dotenvResult.error) {
 const isTest = process.env.NODE_ENV === 'test';
 
 export const ENV = {
-  TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '',
-  DATABASE_URL: process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/groza',
-  UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL || '',
-  UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN || '',
-  REDIS_URL: process.env.REDIS_URL || 'redis://localhost:6379',
-  IMGUR_CLIENT_ID: process.env.IMGUR_CLIENT_ID || '',
-  THREADS_USER_ID: process.env.THREADS_USER_ID || '',
-  THREADS_ACCESS_TOKEN: process.env.THREADS_ACCESS_TOKEN || '',
-  WEBAPP_URL: process.env.WEBAPP_URL || 'https://example.com',
+  TELEGRAM_BOT_TOKEN: (process.env.TELEGRAM_BOT_TOKEN || '').replace(/\r/g, '').trim(),
+  DATABASE_URL: (process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/groza').replace(/\r/g, '').trim(),
+  UPSTASH_REDIS_REST_URL: (process.env.UPSTASH_REDIS_REST_URL || '').replace(/\r/g, '').trim(),
+  UPSTASH_REDIS_REST_TOKEN: (process.env.UPSTASH_REDIS_REST_TOKEN || '').replace(/\r/g, '').trim(),
+  REDIS_URL: (process.env.REDIS_URL || 'redis://localhost:6379').replace(/\r/g, '').trim(),
+  IMGUR_CLIENT_ID: (process.env.IMGUR_CLIENT_ID || '').replace(/\r/g, '').trim(),
+  THREADS_USER_ID: (process.env.THREADS_USER_ID || '').replace(/\r/g, '').trim(),
+  THREADS_ACCESS_TOKEN: (process.env.THREADS_ACCESS_TOKEN || '').replace(/\r/g, '').trim(),
+  WEBAPP_URL: (process.env.WEBAPP_URL || 'https://example.com').replace(/\r/g, '').trim(),
 };
 
 // Fail-Fast валидация критических переменных окружения при запуске в продакшене/девелопменте

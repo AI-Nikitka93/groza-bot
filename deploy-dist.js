@@ -22,38 +22,24 @@ async function deploy() {
     }
     client.close();
 
-    // Запускаем SSH команды для копирования конфига и перезапуска воркеров Passenger
-    console.log("Connecting via SSH to restore config and restart processes...");
-    const conn = new Client();
-    conn.on('ready', () => {
-        const cmd = `
-            cp /home/groza-bot/www/.env /home/groza-bot/www/dist/config.env
-            chmod 600 /home/groza-bot/www/dist/config.env
-            pkill -u groza-bot -f node || true
-        `;
-        conn.exec(cmd, (err, stream) => {
-            if (err) {
-                console.error("SSH Exec Error:", err);
-                conn.end();
-                return;
-            }
-            stream.on('close', () => {
-                console.log("SSH Operations complete (config.env copied, node processes killed).");
-                conn.end();
-            }).on('data', (data) => {
-                process.stdout.write(data);
-            }).stderr.on('data', (data) => {
-                process.stderr.write(data);
-            });
+    console.log("Creating tmp/restart.txt to restart passenger via FTP...");
+    try {
+        const client2 = new ftp.Client();
+        await client2.access({
+            host: "ftp-groza-bot.alwaysdata.net",
+            user: "groza-bot",
+            password: "2734010Ab!!))",
+            secure: true,
+            secureOptions: { rejectUnauthorized: false }
         });
-    }).on('error', (err) => {
-        console.error('SSH Connection Error:', err);
-    }).connect({
-        host: 'ssh-groza-bot.alwaysdata.net',
-        port: 22,
-        username: 'groza-bot',
-        password: '2734010Ab!!))'
-    });
+        require('fs').writeFileSync('restart.txt', '');
+        await client2.cd('www/tmp').catch(e => client2.cd('www').then(() => client2.ensureDir('tmp')));
+        await client2.uploadFrom('restart.txt', 'restart.txt');
+        console.log("Passenger restart triggered.");
+        client2.close();
+    } catch(err) {
+        console.log("FTP restart error: ", err);
+    }
 }
 
 deploy();

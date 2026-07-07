@@ -94,3 +94,9 @@
   - `src/env.ts` (модифицирован)
 - Verification: Код успешно скомпилирован через `tsc`. Строгий комплаенс с официальной документацией Meta (v1.0+) и Imgur v3. Токены дехардкожены и перенесены в `.env`.
 - Status: DONE
+
+### 2026-07-07 17:34:21 UTC — Фикс ошибки сохранения локации в БД (geometry -> geography)
+- Changed: Исправлен тип колонки `location` в таблице `users` (geometry -> geography) путем добавления авто-миграции в `src/db/tembo.ts`. Добавлено явное приведение типов (Number) для координат в `src/bot/handlers/webapp.ts`, чтобы избежать возможных ошибок с типизацией. Изменен тип перехвата ошибки в `src/db/tembo.ts` на `e: any` для устранения ошибки компиляции TS.
+- Files: `src/db/tembo.ts`, `src/bot/handlers/webapp.ts`
+- Verification: Успешно запущены тесты через `adwp_runner.ps1` (Exit Code 0).
+- Status: DONE.

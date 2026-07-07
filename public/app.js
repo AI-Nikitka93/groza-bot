@@ -275,6 +275,30 @@ function initMapEvents() {
       }
     }
   });
+
+  map.on('moveend', () => {
+    if (isManualSelectionMode) {
+      const center = map.getCenter();
+      userLocation = [center.lng, center.lat];
+      if (map.getSource('user-location')) {
+        map.getSource('user-location').setData(getGeoJSONPoint(userLocation));
+      }
+    }
+  });
+
+  map.on('click', (e) => {
+    userLocation = [e.lngLat.lng, e.lngLat.lat];
+    if (map.getSource('user-location')) {
+      map.getSource('user-location').setData(getGeoJSONPoint(userLocation));
+    }
+    
+    isManualSelectionMode = false;
+    crosshair.classList.add('hidden');
+    if (map.getLayer('user-marker')) {
+      map.setLayoutProperty('user-marker', 'visibility', 'visible');
+    }
+    btnConfirm.classList.remove('hidden');
+  });
 }
 
 document.getElementById('btn-search').addEventListener('click', async () => {
@@ -286,16 +310,19 @@ document.getElementById('btn-search').addEventListener('click', async () => {
     const data = await res.json();
     if (data && data.length > 0) {
       const { lat, lon } = data[0];
-      const newLoc = [parseFloat(lon), parseFloat(lat)];
-      map.flyTo({ center: newLoc, zoom: 12 });
+      userLocation = [parseFloat(lon), parseFloat(lat)];
+      map.flyTo({ center: userLocation, zoom: 12 });
       
-      // Activate manual mode automatically after search
-      isManualSelectionMode = true;
-      crosshair.classList.remove('hidden');
-      btnConfirm.classList.remove('hidden');
-      if (map.getLayer('user-marker')) {
-        map.setLayoutProperty('user-marker', 'visibility', 'none');
+      if (map.getSource('user-location')) {
+        map.getSource('user-location').setData(getGeoJSONPoint(userLocation));
       }
+      
+      isManualSelectionMode = false;
+      crosshair.classList.add('hidden');
+      if (map.getLayer('user-marker')) {
+        map.setLayoutProperty('user-marker', 'visibility', 'visible');
+      }
+      btnConfirm.classList.remove('hidden');
     } else {
       tg.showAlert('Город не найден');
     }
@@ -306,11 +333,9 @@ document.getElementById('btn-search').addEventListener('click', async () => {
 
 // Confirm location and send to bot
 btnConfirm.addEventListener('click', () => {
-  // Center of the screen represents the new selected location
-  const center = map.getCenter();
   const payload = {
-    lat: center.lat,
-    lon: center.lng
+    lat: userLocation[1],
+    lon: userLocation[0]
   };
   
   if (tg.sendData) {
