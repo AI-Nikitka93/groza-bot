@@ -84,6 +84,10 @@ graph TD
 
 ## 📊 Operational Excellence & Cost Engineering
 
+> [!WARNING]
+> **Zero-Cost Infrastructure Notice**  
+> This bot is architected entirely on free-tier services to achieve **$0/month** operational costs. Due to platform limitations (e.g., cold starts, rate limits, or provider hibernation), the bot might occasionally experience downtime. If something is broken, please **[contact me on Telegram](https://t.me/YOUR_PERSONAL_USERNAME)**.
+
 By unifying the architecture into a **Single-Worker Engine**, Groza minimizes operational overhead:
 - **Zero-Downtime Telemetry:** API, Bot, and Listener run concurrently on a single Node process.
 - **Lean Footprint:** Replaced heavy geospatial databases with in-memory `turf.js` calculations + Upstash Redis cache.
