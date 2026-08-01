@@ -8,7 +8,8 @@
     "test": "node -r ts-node/register --test tests/bot_conversational.test.ts",
     "production:test": "ts-node tests/production.test.ts",
     "build": "npm run clean && tsc",
-    "start": "if [ -f modules.zip ]; then unzip -qo modules.zip && rm -f modules.zip; fi; node watchdog.js",
+    "postbuild": "npm prune --production",
+    "start": "node watchdog.js",
     "dev": "ts-node src/index.ts"
   },
   "keywords": [],

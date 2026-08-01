@@ -2,9 +2,12 @@ services:
   - type: web
     name: groza-bot
     env: node
-    buildCommand: npm install && npx tsc
+    buildCommand: npm ci && npm run build
     startCommand: npm start
+    healthCheckPath: /health
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: TELEGRAM_BOT_TOKEN
         sync: false
       - key: DATABASE_URL
