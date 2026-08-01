@@ -336,7 +336,7 @@ export async function processStrikesBatch(strikes: {lat: number, lon: number}[])
               lon: u.lon
             }, {
               delay: 20 * 60 * 1000, // Check back in 20 minutes
-              jobId: `allclear:${u.userId}:${u.locationId}:${now}`,
+              jobId: `allclear-${u.userId}-${u.locationId}-${now}`,
               removeOnComplete: true,
               removeOnFail: true
             });

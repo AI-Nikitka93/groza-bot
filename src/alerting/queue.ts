@@ -44,7 +44,7 @@ export const telegramWorker = new Worker('telegram-alerts', async (job) => {
         // Storm is still active, re-enqueue
         await telegramQueue.add('check-all-clear', job.data, {
           delay: 15 * 60 * 1000,
-          jobId: `allclear:${userId}:${locationId}:${Date.now()}`
+          jobId: `allclear-${userId}-${locationId}-${Date.now()}`
         });
       } else {
         // Storm passed
