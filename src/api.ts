@@ -144,7 +144,7 @@ export function startApiServer() {
   // Отдельные эндпоинты Health Checks (без Rate Limit API, чтобы мониторинг всегда проходил)
   app.get('/health', (req, res) => {
     const { status } = MetricsTracker.getStatus();
-    res.status(status === 'failed' || status === 'starting' ? 503 : 200).json({ status: status });
+    res.status(status === 'failed' || status === 'starting' || status === 'degraded' ? 503 : 200).json({ status: status });
   });
 
   app.get('/ready', (req, res) => {
@@ -161,7 +161,7 @@ export function startApiServer() {
       queueLength = await telegramQueue.count();
     } catch (e) {}
 
-    res.status((status === 'failed' || status === 'starting') ? 503 : 200).json({
+    res.status((status === 'failed' || status === 'starting' || status === 'degraded') ? 503 : 200).json({
       status: status,
       dependencyTree: {
         Bot: tree

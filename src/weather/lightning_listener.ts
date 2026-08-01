@@ -52,12 +52,32 @@ export function startLightningListener() {
       }
     });
 
+    let pingInterval: NodeJS.Timeout;
+    let isAlive = false;
+
     ws.on('open', () => {
       reconnectAttempts = 0;
       isBlitzortungConnected = true;
+      isAlive = true;
       console.log(`Blitzortung connected via WSS to ${url}`);
+      
       // Subscribe command payload
       ws.send(JSON.stringify({ a: 111 }));
+
+      // Start Heartbeat
+      pingInterval = setInterval(() => {
+        if (!isAlive) {
+          console.log('Blitzortung WebSocket heartbeat failed. Terminating...');
+          ws.terminate();
+          return;
+        }
+        isAlive = false;
+        ws.ping();
+      }, 30000);
+    });
+
+    ws.on('pong', () => {
+      isAlive = true;
     });
 
     ws.on('message', (data: WebSocket.RawData) => {
@@ -87,6 +107,7 @@ export function startLightningListener() {
     });
 
     ws.on('close', () => {
+      if (pingInterval) clearInterval(pingInterval);
       isBlitzortungConnected = false;
       const delay = Math.min(30000, Math.pow(2, reconnectAttempts) * 1000) + Math.random() * 1000;
       reconnectAttempts++;

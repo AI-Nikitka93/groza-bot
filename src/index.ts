@@ -61,7 +61,10 @@ async function bootstrap() {
     MetricsTracker.setStatus('degraded');
   }
   // 2. Start Bot and Servers
-  startBot().catch(console.error);
+  startBot().catch((err) => {
+    console.error('startBot failed:', err);
+    process.exit(1);
+  });
   startLightningListener();
   startAnalyzerCron();
   startAllClearCron();
