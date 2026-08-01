@@ -16,7 +16,7 @@
 
   <br>
 
-  **[🚀 Try the Bot in Telegram](https://t.me/YOUR_BOT_USERNAME)**
+  **[🚀 Try the Bot in Telegram](https://t.me/groza_alert_bot)**
 </div>
 
 ---

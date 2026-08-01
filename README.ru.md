@@ -16,7 +16,7 @@
 
   <br>
 
-  **[🚀 Запустить бота в Telegram](https://t.me/YOUR_BOT_USERNAME)**
+  **[🚀 Запустить бота в Telegram](https://t.me/groza_alert_bot)**
 </div>
 
 ---
