@@ -6,32 +6,69 @@ export const pool = new Pool({
   ssl: ENV.DATABASE_URL.includes('localhost') ? false : { rejectUnauthorized: false }
 });
 
+pool.on('error', (err) => { console.error('Unexpected DB Error:', err); });
+
 export async function initDatabase() {
   const client = await pool.connect();
   try {
     // Убеждаемся, что PostGIS установлен
     await client.query('CREATE EXTENSION IF NOT EXISTS postgis;');
     
-    // Создаем таблицу пользователей с их позицией (используя GEOGRAPHY для корректной индексации и масштабирования)
+    // Создаем таблицу пользователей
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
         id BIGINT PRIMARY KEY,
-        location GEOGRAPHY(Point, 4326),
+        timezone VARCHAR(50) DEFAULT 'UTC',
+        quiet_hours_start TIME,
+        quiet_hours_end TIME,
+        disable_observation BOOLEAN DEFAULT false,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
 
-    // Создаем GIST индекс на GEOGRAPHY поле для оптимизации гео-запросов 
+    try {
+      await client.query(`
+        ALTER TABLE users 
+        ADD COLUMN IF NOT EXISTS timezone VARCHAR(50) DEFAULT 'UTC',
+        ADD COLUMN IF NOT EXISTS quiet_hours_start TIME,
+        ADD COLUMN IF NOT EXISTS quiet_hours_end TIME,
+        ADD COLUMN IF NOT EXISTS disable_observation BOOLEAN DEFAULT false;
+      `);
+    } catch (e: any) {
+      console.log('Alter users failed or not needed:', e.message);
+    }
+
+    // Создаем таблицу для локаций пользователей
     await client.query(`
-      CREATE INDEX IF NOT EXISTS idx_users_location 
-      ON users USING GIST (location);
+      CREATE TABLE IF NOT EXISTS user_locations (
+        id SERIAL PRIMARY KEY,
+        user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,
+        name VARCHAR(255) NOT NULL,
+        location GEOGRAPHY(Point, 4326) NOT NULL,
+        alert_radius INTEGER DEFAULT 15000,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        CONSTRAINT unique_user_location UNIQUE (user_id, name)
+      );
     `);
 
-    // Миграция со старой схемы (geometry -> geography), если требуется
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_user_locations_location 
+      ON user_locations USING GIST (location);
+    `);
+
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_user_locations_user_id 
+      ON user_locations (user_id);
+    `);
+
     try {
-      await client.query(`ALTER TABLE users ALTER COLUMN location TYPE GEOGRAPHY(Point, 4326) USING location::geography;`);
+      await client.query(`
+        INSERT INTO user_locations (user_id, name, location)
+        SELECT id, 'Основная', location FROM users WHERE location IS NOT NULL
+        ON CONFLICT (user_id, name) DO NOTHING;
+      `);
     } catch (e: any) {
-      console.log('Migration geometry -> geography not needed or failed', e.message);
+      console.log('Data migration to user_locations failed or not needed:', e.message);
     }
 
     // Создаем таблицу для долгосрочного хранения ударов молний (статистика за 24 часа)
@@ -41,6 +78,39 @@ export async function initDatabase() {
         location GEOGRAPHY(Point, 4326),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+    `);
+
+    // Создаем таблицу для хранения кластеров штормовых ячеек (Storm Cells)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS storm_cells (
+        id SERIAL PRIMARY KEY,
+        track_id UUID,
+        centroid GEOGRAPHY(Point, 4326),
+        hull GEOGRAPHY(Polygon, 4326),
+        speed_mps REAL,
+        direction_deg REAL,
+        strike_rate REAL,
+        risk_score REAL,
+        is_active BOOLEAN DEFAULT true,
+        first_seen_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    try {
+      await client.query(`
+        ALTER TABLE storm_cells 
+        ADD COLUMN IF NOT EXISTS track_id UUID,
+        ADD COLUMN IF NOT EXISTS first_seen_at TIMESTAMP,
+        ADD COLUMN IF NOT EXISTS risk_score REAL;
+      `);
+    } catch (e: any) {
+      console.log('Alter storm_cells failed or not needed:', e.message);
+    }
+
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_storm_cells_track_id 
+      ON storm_cells(track_id);
     `);
 
     // Пространственный индекс по координатам молний
@@ -53,6 +123,23 @@ export async function initDatabase() {
     await client.query(`
       CREATE INDEX IF NOT EXISTS idx_strikes_created_at 
       ON strikes (created_at);
+    `);
+
+    // Пространственные индексы для штормовых ячеек
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_storm_cells_centroid 
+      ON storm_cells USING GIST (centroid);
+    `);
+
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_storm_cells_hull 
+      ON storm_cells USING GIST (hull);
+    `);
+
+    // Индекс по активности и времени для быстрой выборки активных штормов
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_storm_cells_active_created 
+      ON storm_cells (is_active, created_at DESC);
     `);
 
     // Создаем таблицу ошибок для логирования сбоев системы
@@ -90,29 +177,74 @@ export async function initDatabase() {
     console.log('Database initialized successfully.');
   } catch (error) {
     console.error('Error initializing database:', error);
+    throw error;
   } finally {
     client.release();
   }
 }
 
-export async function upsertUserLocation(userId: number, lat: number, lon: number) {
+export async function pingDatabase(): Promise<boolean> {
+  try {
+    const res = await pool.query('SELECT 1 as ping');
+    return res.rows[0].ping === 1;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function upsertUserLocation(userId: number, lat: number, lon: number, name: string = 'Основная', radiusMeters: number = 50000) {
   // Валидируем координаты перед записью
   if (lat == null || lon == null || isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
     throw new Error('Invalid coordinates provided for user location upsert');
   }
 
-  const query = `
-    INSERT INTO users (id, location, updated_at)
-    VALUES ($1, ST_SetSRID(ST_MakePoint($2, $3), 4326)::geography, CURRENT_TIMESTAMP)
-    ON CONFLICT (id) 
-    DO UPDATE SET 
-      location = EXCLUDED.location,
-      updated_at = CURRENT_TIMESTAMP;
+  // Создаем юзера если нет
+  const userQuery = `
+    INSERT INTO users (id, updated_at)
+    VALUES ($1, CURRENT_TIMESTAMP)
+    ON CONFLICT (id) DO UPDATE SET updated_at = CURRENT_TIMESTAMP;
   `;
-  await pool.query(query, [userId, lon, lat]);
+  await pool.query(userQuery, [userId]);
+
+  // Проверяем существование локации с таким именем у пользователя
+  const checkRes = await pool.query('SELECT id FROM user_locations WHERE user_id = $1 AND name = $2 LIMIT 1', [userId, name]);
+  
+  if (checkRes.rows.length > 0) {
+    await pool.query(`
+      UPDATE user_locations 
+      SET location = ST_SetSRID(ST_MakePoint($3, $4), 4326)::geography, alert_radius = $5
+      WHERE user_id = $1 AND name = $2;
+    `, [userId, name, lon, lat, radiusMeters]);
+  } else {
+    await pool.query(`
+      INSERT INTO user_locations (user_id, name, location, alert_radius, created_at)
+      VALUES ($1, $2, ST_SetSRID(ST_MakePoint($3, $4), 4326)::geography, $5, CURRENT_TIMESTAMP);
+    `, [userId, name, lon, lat, radiusMeters]);
+  }
 }
 
-export async function findUsersInRadiusBatch(strikes: {lat: number, lon: number}[], radiusMeters: number) {
+export async function getUserLocations(userId: number): Promise<{ id: number, name: string, lat: number, lon: number }[]> {
+  const query = `
+    SELECT id, name, ST_Y(location::geometry) as lat, ST_X(location::geometry) as lon
+    FROM user_locations
+    WHERE user_id = $1
+    ORDER BY created_at ASC;
+  `;
+  const res = await pool.query(query, [userId]);
+  return res.rows.map(r => ({
+    id: r.id,
+    name: r.name,
+    lat: Number(r.lat),
+    lon: Number(r.lon)
+  }));
+}
+
+export async function deleteUserLocation(userId: number, locationId: number): Promise<boolean> {
+  const res = await pool.query('DELETE FROM user_locations WHERE user_id = $1 AND id = $2', [userId, locationId]);
+  return (res.rowCount || 0) > 0;
+}
+
+export async function findUsersInRadiusBatch(strikes: {lat: number, lon: number}[]): Promise<any[]> {
   // Валидация координат для предотвращения падений PostGIS при парсинге
   const validStrikes = strikes.filter(s => 
     typeof s.lat === 'number' && !isNaN(s.lat) && s.lat >= -90 && s.lat <= 90 &&
@@ -122,22 +254,53 @@ export async function findUsersInRadiusBatch(strikes: {lat: number, lon: number}
   
   const multiPointString = `MULTIPOINT(${validStrikes.map(s => `${s.lon} ${s.lat}`).join(', ')})`;
   const query = `
-    SELECT DISTINCT id
-    FROM users
-    WHERE ST_DWithin(
-      location,
-      ST_GeomFromText($1, 4326)::geography,
-      $2
-    );
+    WITH batch AS (
+      SELECT ST_GeomFromText($1, 4326)::geography AS geom
+    )
+    SELECT 
+      u.id AS "userId",
+      ul.id AS "locationId",
+      ul.name AS "locationName",
+      u.timezone,
+      u.quiet_hours_start,
+      u.quiet_hours_end,
+      u.disable_observation,
+      ul.alert_radius,
+      ST_Y(ul.location::geometry) AS lat,
+      ST_X(ul.location::geometry) AS lon,
+      ST_Distance(ul.location, b.geom) AS distance,
+      (
+        SELECT COUNT(*)
+        FROM strikes s
+        WHERE ST_DWithin(ul.location, s.location, 30000)
+          AND s.created_at >= NOW() - INTERVAL '15 minutes'
+      ) AS "recentStrikesCount"
+    FROM users u
+    JOIN user_locations ul ON u.id = ul.user_id
+    CROSS JOIN batch b
+    WHERE ST_DWithin(ul.location, b.geom, ul.alert_radius);
   `;
-  const res = await pool.query(query, [multiPointString, radiusMeters]);
-  return res.rows.map(row => row.id);
+  const res = await pool.query(query, [multiPointString]);
+  return res.rows.map(row => ({
+    userId: row.userId.toString(),
+    locationId: row.locationId,
+    locationName: row.locationName,
+    timezone: row.timezone,
+    quiet_hours_start: row.quiet_hours_start,
+    quiet_hours_end: row.quiet_hours_end,
+    disable_observation: row.disable_observation,
+    alert_radius: row.alert_radius,
+    lat: Number(row.lat),
+    lon: Number(row.lon),
+    distance: Number(row.distance),
+    recentStrikesCount: Number(row.recentStrikesCount)
+  }));
 }
 
 export async function getAllUsers(): Promise<{id: number, lat: number, lon: number}[]> {
   const query = `
-    SELECT id, ST_Y(location::geometry) as lat, ST_X(location::geometry) as lon
-    FROM users;
+    SELECT ul.user_id as id, ST_Y(ul.location::geometry) as lat, ST_X(ul.location::geometry) as lon
+    FROM user_locations ul;
   `;
   const res = await pool.query(query);
   return res.rows;
@@ -178,8 +341,8 @@ export async function insertStrikesBatch(strikes: {lat: number, lon: number}[]) 
 }
 
 export async function countStrikesNearUser(userId: number, radiusMeters: number = 100000): Promise<number | null> {
-  // 1. Получаем местоположение пользователя
-  const userRes = await pool.query('SELECT location FROM users WHERE id = $1', [userId]);
+  // 1. Получаем местоположение пользователя (берем 'Основная' или первую попавшуюся)
+  const userRes = await pool.query('SELECT location FROM user_locations WHERE user_id = $1 LIMIT 1', [userId]);
   if (userRes.rows.length === 0) return null;
   
   const userLocation = userRes.rows[0].location;
@@ -199,8 +362,9 @@ export async function countStrikesNearUser(userId: number, radiusMeters: number 
 export async function getUserLocation(userId: number): Promise<{ lat: number, lon: number } | null> {
   const query = `
     SELECT ST_Y(location::geometry) as lat, ST_X(location::geometry) as lon
-    FROM users
-    WHERE id = $1;
+    FROM user_locations
+    WHERE user_id = $1
+    LIMIT 1;
   `;
   const res = await pool.query(query, [userId]);
   if (res.rows.length === 0 || res.rows[0].lat == null || res.rows[0].lon == null) {
@@ -347,3 +511,43 @@ export async function getRecentErrors(
     created_at: row.created_at
   }));
 }
+
+export async function getClosestStormCell(lat: number, lon: number): Promise<any | null> {
+  const query = `
+    WITH latest_cell AS (
+      SELECT 
+        id, track_id, centroid, speed_mps, direction_deg, strike_rate, risk_score, first_seen_at, created_at,
+        ST_Distance(centroid, ST_SetSRID(ST_MakePoint($1, $2), 4326)::geography) as distance_meters,
+        ST_X(centroid::geometry) as centroid_lon,
+        ST_Y(centroid::geometry) as centroid_lat
+      FROM storm_cells
+      WHERE is_active = true
+      ORDER BY centroid <-> ST_SetSRID(ST_MakePoint($1, $2), 4326)::geography
+      LIMIT 1
+    ),
+    cell_history AS (
+      SELECT 
+        track_id,
+        EXTRACT(EPOCH FROM (MAX(created_at) - MIN(first_seen_at))) / 60.0 AS age_minutes,
+        COALESCE(STDDEV(direction_deg), 0) AS trajectory_variance,
+        ARRAY_AGG(ST_AsGeoJSON(centroid)::json ORDER BY created_at ASC) as historical_centroids,
+        ARRAY_AGG(risk_score ORDER BY created_at ASC) as historical_scores
+      FROM storm_cells
+      WHERE track_id = (SELECT track_id FROM latest_cell)
+        AND created_at >= NOW() - INTERVAL '1 hour'
+      GROUP BY track_id
+    )
+    SELECT 
+      l.*,
+      COALESCE(h.age_minutes, 0) as age_minutes,
+      COALESCE(h.trajectory_variance, 0) as trajectory_variance,
+      COALESCE(h.historical_centroids, ARRAY[]::json[]) as historical_centroids,
+      COALESCE(h.historical_scores, ARRAY[]::real[]) as historical_scores
+    FROM latest_cell l
+    LEFT JOIN cell_history h ON l.track_id = h.track_id;
+  `;
+  const res = await pool.query(query, [lon, lat]);
+  if (res.rows.length === 0) return null;
+  return res.rows[0];
+}
+

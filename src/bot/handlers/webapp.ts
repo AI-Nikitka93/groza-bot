@@ -1,5 +1,6 @@
 import { Context, Markup } from 'telegraf';
 import { upsertUserLocation } from '../../db/tembo';
+import { ENV } from '../../env';
 
 export async function handleWebAppData(ctx: Context) {
   // @ts-ignore
@@ -15,7 +16,21 @@ export async function handleWebAppData(ctx: Context) {
       const lat = Number(data.lat);
       const lon = Number(data.lon);
       await upsertUserLocation(userId, lat, lon);
-      await ctx.reply('✅ Локация сохранена. Радар активирован. Мы уведомими вас, если гроза окажется в радиусе 15 км.', Markup.removeKeyboard());
+      const timestamp = Date.now();
+      const userUrl = `${ENV.WEBAPP_URL}?lat=${lat}&lon=${lon}&v=${timestamp}`;
+      
+      // Update Menu Button per-chat
+      try {
+        await ctx.setChatMenuButton({
+          type: 'web_app',
+          text: '🗺 Моя локация',
+          web_app: { url: userUrl }
+        });
+      } catch(e) {
+        console.error('Failed to set chat menu button', e);
+      }
+
+      await ctx.reply('✅ Локация сохранена. Зона наблюдения до 30 км активирована. Мы уведомим вас при возникновении грозовой угрозы по Индексу Опасности!', Markup.keyboard([Markup.button.webApp('🗺 Моя локация', userUrl)]).resize());
     } else {
       await ctx.reply('❌ Ошибка: получены неверные данные от карты.');
     }

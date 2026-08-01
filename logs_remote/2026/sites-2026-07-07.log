@@ -1978,3 +1978,697 @@
 [07/Jul/2026:19:30:18 +0200] [upstream] [2579538] STDOUT: [HTTP-DEBUG] bot.handleUpdate completed successfully.
 [07/Jul/2026:19:30:41 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
 [07/Jul/2026:19:30:46 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:31:46 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:31:52 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:32:52 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:32:57 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:33:57 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:34:02 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:35:02 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:35:07 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:35:51 +0200] [upstream] [2579538] STDOUT: [HTTP-DEBUG] Incoming: GET /api/strikes (original: /api/strikes)
+[07/Jul/2026:19:35:51 +0200] [upstream] [2579538] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:19:36:07 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:36:12 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:37:12 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:37:17 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:38:17 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:38:22 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:39:22 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:39:27 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:40:27 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:40:33 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:41:33 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:41:38 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:42:38 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:42:43 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:43:43 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:43:48 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:44:48 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:44:53 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:45:53 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:45:58 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:46:58 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:47:03 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:48:03 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:48:08 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:49:08 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:49:14 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:50:14 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:50:19 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:51:19 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:51:24 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:52:24 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:52:29 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:53:29 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:53:34 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:54:34 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:54:39 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:55:39 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:55:44 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:56:44 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:56:49 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:57:49 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:57:55 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:19:58:55 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:19:59:00 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:20:00:00 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:00:05 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:20:01:05 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:01:10 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:20:02:10 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:02:15 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:20:03:15 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:03:20 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:20:04:20 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:04:25 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:20:05:25 +0200] [upstream] [2579538] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:05:30 +0200] [upstream] [2579538] STDOUT: Blitzortung connected
+[07/Jul/2026:20:06:06 +0200] [upstream] [2579538] SIGTERM sent to upstream
+[07/Jul/2026:20:06:06 +0200] [upstream] [2579538] Upstream stopped (reason: idle)
+[07/Jul/2026:20:09:13 +0200] [upstream] Upstream starting: npm start (env: {'HOME': '/home/groza-bot', 'LANG': 'en_US.UTF-8', 'LC_ALL': 'en_US.UTF-8', 'PATH': '/home/groza-bot/.local/bin:/home/groza-bot/.local/share/gem/ruby/3.4.0/bin:/home/groza-bot/.gem/ruby/3.4.0/bin:/home/groza-bot/.composer/vendor/bin:/home/groza-bot/.npm-packages/bin:/usr/local/bin:/usr/bin:/bin', 'TMPDIR': '/home/groza-bot/admin/tmp', '# ': '=========================================', '# GROZA - PERSONAL LIGHTNING ROD (Zero-Cost)': '', '# Environment Variables Template': '', '# 1. TELEGRAM BOT': '', '# Обязательно: Получите токен у @BotFather': '', 'TELEGRAM_BOT_TOKEN': '8516017309:AAHZ4PVY46dywE1nmGLOFCclzy1MKA07Ppo', '# 2. TEMBO POSTGRES (PostGIS)': '', '# Обязательно: Строка подключения из Tembo Cloud': '', 'DATABASE_URL': 'postgresql://neondb_owner:npg_tWIvK3DGLl0w@ep-purple-morning-at630e0v-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require', '# 3. UPSTASH REDIS': '', '# Обязательно: Данные из консоли Upstash для REST/ioredis': '', 'UPSTASH_REDIS_REST_URL': 'https://upstash-url.upstash.io', 'UPSTASH_REDIS_REST_TOKEN': 'your_rest_token_here', 'REDIS_URL': 'rediss://default:gQAAAAAAAbQnAAIgcDE2NDY2N2UyZmQ2ZGE0OTJmYmI0ZjUxMzQxNDc0YjljYw@valued-lion-111655.upstash.io:6379', '# 4. IMGUR API': '', '# Обязательно: Client ID для анонимной загрузки сгенерированных карт': '', '# Регистрация: https://api.imgur.com/oauth2/addclient': '', 'IMGUR_CLIENT_ID': 'your_client_id_here', '# 5. THREADS GRAPH API': '', '# Обязательно: User ID и Long-Lived Access Token (60 дней) ': '', '# Токен необходимо рефрешить раз в месяц через cron': '', 'THREADS_USER_ID': '123456789012345', 'THREADS_ACCESS_TOKEN': 'EAAXXXXXXX_long_lived_token_here', '# 6. PORT (Express Server)': '', 'PORT': '8100', 'NODEJS_VERSION': '', 'HOST': 'fd00::7:6dd4', 'IP': 'fd00::7:6dd4'}, cwd: /home/groza-bot/www)
+[07/Jul/2026:20:09:13 +0200] [upstream] Upstream started PID: 2655030
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDOUT: 
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDOUT: > groza@1.0.0 start
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDOUT: > if [ -f modules.zip ]; then unzip -qo modules.zip && rm -f modules.zip; fi; node dist/index.js
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDOUT: 
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDOUT: ◇ injected env (1) from dist/config.env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDOUT: Bootstrapping Groza Single-Worker...
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDERR: (node:2655059) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDERR: In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDERR: 
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDERR: To prepare for this change:
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDERR: - If you want the current behavior, explicitly use 'sslmode=verify-full'
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDERR: - If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDERR: 
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDERR: See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+[07/Jul/2026:20:09:13 +0200] [upstream] [2655030] STDERR: (Use `node --trace-warnings ...` to show where the warning was created)
+[07/Jul/2026:20:09:15 +0200] [upstream] [2655030] STDOUT: Database initialized successfully.
+[07/Jul/2026:20:09:15 +0200] [upstream] [2655030] STDOUT: Telegram bot is running in WEBHOOK mode on Alwaysdata.
+[07/Jul/2026:20:09:15 +0200] [upstream] [2655030] STDOUT: Starting Blitzortung real-time listener...
+[07/Jul/2026:20:09:15 +0200] [upstream] [2655030] STDOUT: Groza Single-Worker is running.
+[07/Jul/2026:20:09:15 +0200] [upstream] [2655030] STDOUT: API and Static server running on fd00::7:6dd4:8100
+[07/Jul/2026:20:09:15 +0200] [upstream] [2655030] STDOUT: Telegram webhook successfully set to: https://groza-bot.alwaysdata.net/api/telegram-webhook-8516017309
+[07/Jul/2026:20:09:16 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:09:16 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309 (original: /api/telegram-webhook-8516017309)
+[07/Jul/2026:20:09:16 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:09:16 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] WEBHOOK HANDLER ENTERED!
+[07/Jul/2026:20:09:16 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Request headers: {"host":"groza-bot.alwaysdata.net","content-type":"application/json","accept-encoding":"gzip, deflate","content-length":"329","x-real-ip":"91.108.5.47","via":"1.1 alproxy","x-forwarded-proto":"https"}
+[07/Jul/2026:20:09:16 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body data read complete. Length: 329
+[07/Jul/2026:20:09:16 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body content: {"update_id":740518480,
+[07/Jul/2026:20:09:16 +0200] [upstream] [2655030] STDOUT: "message":{"message_id":72,"from":{"id":7675681343,"is_bot":false,"first_name":"Nik","username":"NikiBelr","language_code":"ru"},"chat":{"id":7675681343,"first_name":"Nik","username":"NikiBelr","type":"private"},"date":1783447753,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}
+[07/Jul/2026:20:09:17 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] bot.handleUpdate completed successfully.
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /index.html (original: /index.html)
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /style.css (original: /style.css)
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /app.js (original: /app.js)
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /favicon.ico (original: /favicon.ico)
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /api/strikes (original: /api/strikes)
+[07/Jul/2026:20:09:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:09:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309 (original: /api/telegram-webhook-8516017309)
+[07/Jul/2026:20:09:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:09:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] WEBHOOK HANDLER ENTERED!
+[07/Jul/2026:20:09:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Request headers: {"host":"groza-bot.alwaysdata.net","content-type":"application/json","accept-encoding":"gzip, deflate","content-length":"395","x-real-ip":"91.108.5.47","via":"1.1 alproxy","x-forwarded-proto":"https"}
+[07/Jul/2026:20:09:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body data read complete. Length: 395
+[07/Jul/2026:20:09:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body content: {"update_id":740518481,
+[07/Jul/2026:20:09:23 +0200] [upstream] [2655030] STDOUT: "message":{"message_id":74,"from":{"id":7675681343,"is_bot":false,"first_name":"Nik","username":"NikiBelr","language_code":"ru"},"chat":{"id":7675681343,"first_name":"Nik","username":"NikiBelr","type":"private"},"date":1783447763,"web_app_data":{"button_text":"\ud83d\uddfa \u041a\u0430\u0440\u0442\u0430","data":"{\"lat\":55.74926643609527,\"lon\":37.58364393939826}"}}}
+[07/Jul/2026:20:09:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] bot.handleUpdate completed successfully.
+[07/Jul/2026:20:10:16 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:10:21 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:11:21 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:11:26 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:12:26 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:12:31 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:13:31 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:13:36 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:14:36 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:14:41 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:15:41 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:15:46 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:16:46 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:16:51 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:17:51 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:17:56 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:18:56 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:19:02 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:20:02 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:20:07 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:21:07 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:21:12 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:22:12 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:22:17 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:22:55 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309 (original: /api/telegram-webhook-8516017309)
+[07/Jul/2026:20:22:55 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:22:55 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] WEBHOOK HANDLER ENTERED!
+[07/Jul/2026:20:22:55 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Request headers: {"host":"groza-bot.alwaysdata.net","content-type":"application/json","accept-encoding":"gzip, deflate","content-length":"329","x-real-ip":"91.108.5.47","via":"1.1 alproxy","x-forwarded-proto":"https"}
+[07/Jul/2026:20:22:55 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body data read complete. Length: 329
+[07/Jul/2026:20:22:55 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body content: {"update_id":740518482,
+[07/Jul/2026:20:22:55 +0200] [upstream] [2655030] STDOUT: "message":{"message_id":76,"from":{"id":7675681343,"is_bot":false,"first_name":"Nik","username":"NikiBelr","language_code":"ru"},"chat":{"id":7675681343,"first_name":"Nik","username":"NikiBelr","type":"private"},"date":1783448575,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}
+[07/Jul/2026:20:22:55 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] bot.handleUpdate completed successfully.
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /index.html (original: /index.html)
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /style.css (original: /style.css)
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /radar.css (original: /radar.css)
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /app.js (original: /app.js)
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /favicon.ico (original: /favicon.ico)
+[07/Jul/2026:20:22:58 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:23:17 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:23:22 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:23:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309 (original: /api/telegram-webhook-8516017309)
+[07/Jul/2026:20:23:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:23:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] WEBHOOK HANDLER ENTERED!
+[07/Jul/2026:20:23:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Request headers: {"host":"groza-bot.alwaysdata.net","content-type":"application/json","accept-encoding":"gzip, deflate","content-length":"397","x-real-ip":"91.108.5.47","via":"1.1 alproxy","x-forwarded-proto":"https"}
+[07/Jul/2026:20:23:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body data read complete. Length: 397
+[07/Jul/2026:20:23:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body content: {"update_id":740518483,
+[07/Jul/2026:20:23:33 +0200] [upstream] [2655030] STDOUT: "message":{"message_id":78,"from":{"id":7675681343,"is_bot":false,"first_name":"Nik","username":"NikiBelr","language_code":"ru"},"chat":{"id":7675681343,"first_name":"Nik","username":"NikiBelr","type":"private"},"date":1783448613,"web_app_data":{"button_text":"\ud83d\uddfa \u041a\u0430\u0440\u0442\u0430","data":"{\"lat\":49.807085826682595,\"lon\":23.916120313932424}"}}}
+[07/Jul/2026:20:23:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] bot.handleUpdate completed successfully.
+[07/Jul/2026:20:24:22 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:24:27 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:25:27 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:25:32 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:26:32 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:26:37 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:27:37 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:27:43 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:28:43 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:28:48 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:29:48 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:29:53 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:30:53 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:30:58 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:31:58 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:32:03 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:33:03 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:33:08 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:34:08 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:34:13 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:35:13 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:35:18 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:36:18 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:36:24 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:37:24 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:37:29 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:38:29 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:38:34 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:39:18 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309 (original: /api/telegram-webhook-8516017309)
+[07/Jul/2026:20:39:18 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:39:18 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] WEBHOOK HANDLER ENTERED!
+[07/Jul/2026:20:39:18 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Request headers: {"host":"groza-bot.alwaysdata.net","content-type":"application/json","accept-encoding":"gzip, deflate","content-length":"329","x-real-ip":"91.108.5.47","via":"1.1 alproxy","x-forwarded-proto":"https"}
+[07/Jul/2026:20:39:18 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body data read complete. Length: 329
+[07/Jul/2026:20:39:18 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body content: {"update_id":740518484,
+[07/Jul/2026:20:39:18 +0200] [upstream] [2655030] STDOUT: "message":{"message_id":80,"from":{"id":7675681343,"is_bot":false,"first_name":"Nik","username":"NikiBelr","language_code":"ru"},"chat":{"id":7675681343,"first_name":"Nik","username":"NikiBelr","type":"private"},"date":1783449558,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}
+[07/Jul/2026:20:39:18 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] bot.handleUpdate completed successfully.
+[07/Jul/2026:20:39:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /index.html (original: /index.html)
+[07/Jul/2026:20:39:20 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:39:21 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /style.css (original: /style.css)
+[07/Jul/2026:20:39:21 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:39:21 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /radar.css (original: /radar.css)
+[07/Jul/2026:20:39:21 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:39:21 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /app.js (original: /app.js)
+[07/Jul/2026:20:39:21 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:39:21 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /favicon.ico (original: /favicon.ico)
+[07/Jul/2026:20:39:21 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:39:34 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:39:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309 (original: /api/telegram-webhook-8516017309)
+[07/Jul/2026:20:39:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:39:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] WEBHOOK HANDLER ENTERED!
+[07/Jul/2026:20:39:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Request headers: {"host":"groza-bot.alwaysdata.net","content-type":"application/json","accept-encoding":"gzip, deflate","content-length":"397","x-real-ip":"91.108.5.47","via":"1.1 alproxy","x-forwarded-proto":"https"}
+[07/Jul/2026:20:39:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body data read complete. Length: 397
+[07/Jul/2026:20:39:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Body content: {"update_id":740518485,
+[07/Jul/2026:20:39:37 +0200] [upstream] [2655030] STDOUT: "message":{"message_id":82,"from":{"id":7675681343,"is_bot":false,"first_name":"Nik","username":"NikiBelr","language_code":"ru"},"chat":{"id":7675681343,"first_name":"Nik","username":"NikiBelr","type":"private"},"date":1783449577,"web_app_data":{"button_text":"\ud83d\uddfa \u041a\u0430\u0440\u0442\u0430","data":"{\"lat\":48.776610781611595,\"lon\":23.422547175247473}"}}}
+[07/Jul/2026:20:39:38 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] bot.handleUpdate completed successfully.
+[07/Jul/2026:20:39:39 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:40:39 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:40:44 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:41:10 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /kill.php (original: /kill.php)
+[07/Jul/2026:20:41:10 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:41:10 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: HEAD /kill.php (original: /kill.php)
+[07/Jul/2026:20:41:10 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:41:11 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /kill.php (original: /kill.php)
+[07/Jul/2026:20:41:11 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:41:22 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /kill_now_please (original: /kill_now_please)
+[07/Jul/2026:20:41:22 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:41:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: HEAD /kill_now_please (original: /kill_now_please)
+[07/Jul/2026:20:41:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:41:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /kill_now_please (original: /kill_now_please)
+[07/Jul/2026:20:41:23 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:41:44 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:41:44 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /kill_now_please (original: /kill_now_please)
+[07/Jul/2026:20:41:44 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:41:49 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:42:49 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:42:54 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:42:55 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:42:55 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:43:54 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:43:59 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:44:59 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:45:05 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:45:39 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:45:39 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:46:05 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:46:10 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:47:10 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:47:15 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:33 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:34 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:35 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:36 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:37 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:38 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:38 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:38 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:38 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:38 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:38 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:39 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:39 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:39 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:39 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:40 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:40 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:40 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:40 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:41 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:41 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:41 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:41 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:42 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:42 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:45 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:45 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:46 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:46 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:47 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:47 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:48 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:48 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:47:52 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:47:52 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:48:15 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:48:20 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:49:00 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /crash.php (original: /crash.php)
+[07/Jul/2026:20:49:00 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:49:02 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: HEAD /crash.php (original: /crash.php)
+[07/Jul/2026:20:49:02 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:49:02 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /crash.php (original: /crash.php)
+[07/Jul/2026:20:49:02 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:49:20 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:49:25 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:49:45 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /api/monitoring/stats (original: /api/monitoring/stats)
+[07/Jul/2026:20:49:45 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:49:48 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /api/monitoring/stats (original: /api/monitoring/stats)
+[07/Jul/2026:20:49:48 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:49:51 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /api/monitoring/stats (original: /api/monitoring/stats)
+[07/Jul/2026:20:49:51 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:49:53 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /api/monitoring/stats (original: /api/monitoring/stats)
+[07/Jul/2026:20:49:53 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:49:56 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: GET /api/monitoring/stats (original: /api/monitoring/stats)
+[07/Jul/2026:20:49:56 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:50:25 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:50:30 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:50:38 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309%0D (original: /api/telegram-webhook-8516017309%0D)
+[07/Jul/2026:20:50:38 +0200] [upstream] [2655030] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:20:51:30 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:51:35 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:52:35 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:52:40 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:53:40 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:53:46 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:54:46 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:54:51 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:55:51 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:55:56 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:56:56 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:57:01 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:58:01 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:58:06 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:20:59:06 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:20:59:11 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:00:11 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:00:16 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:01:16 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:01:21 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:02:21 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:02:27 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:03:27 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:03:32 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:04:32 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:04:37 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:05:37 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:05:42 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:06:42 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:06:47 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:07:47 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:07:52 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:08:52 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:08:57 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:09:57 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:10:02 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:11:02 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:11:08 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:12:08 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:12:13 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:13:13 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:13:18 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:14:18 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:14:23 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:15:23 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:15:28 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:16:28 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:16:33 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:17:33 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:17:38 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:18:38 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:18:43 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:19:43 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:19:49 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:20:49 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:20:54 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:21:54 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:21:59 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:22:59 +0200] [upstream] [2655030] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:23:04 +0200] [upstream] [2655030] STDOUT: Blitzortung connected
+[07/Jul/2026:21:23:07 +0200] [upstream] [2655030] SIGTERM sent to upstream
+[07/Jul/2026:21:23:07 +0200] [upstream] [2655030] Upstream stopped (reason: idle)
+[07/Jul/2026:21:56:39 +0200] [upstream] Upstream starting: npm start (env: {'HOME': '/home/groza-bot', 'LANG': 'en_US.UTF-8', 'LC_ALL': 'en_US.UTF-8', 'PATH': '/home/groza-bot/.local/bin:/home/groza-bot/.local/share/gem/ruby/3.4.0/bin:/home/groza-bot/.gem/ruby/3.4.0/bin:/home/groza-bot/.composer/vendor/bin:/home/groza-bot/.npm-packages/bin:/usr/local/bin:/usr/bin:/bin', 'TMPDIR': '/home/groza-bot/admin/tmp', '# ': '=========================================', '# GROZA - PERSONAL LIGHTNING ROD (Zero-Cost)': '', '# Environment Variables Template': '', '# 1. TELEGRAM BOT': '', '# Обязательно: Получите токен у @BotFather': '', 'TELEGRAM_BOT_TOKEN': '8516017309:AAHZ4PVY46dywE1nmGLOFCclzy1MKA07Ppo', '# 2. TEMBO POSTGRES (PostGIS)': '', '# Обязательно: Строка подключения из Tembo Cloud': '', 'DATABASE_URL': 'postgresql://neondb_owner:npg_tWIvK3DGLl0w@ep-purple-morning-at630e0v-pooler.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require', '# 3. UPSTASH REDIS': '', '# Обязательно: Данные из консоли Upstash для REST/ioredis': '', 'UPSTASH_REDIS_REST_URL': 'https://upstash-url.upstash.io', 'UPSTASH_REDIS_REST_TOKEN': 'your_rest_token_here', 'REDIS_URL': 'rediss://default:gQAAAAAAAbQnAAIgcDE2NDY2N2UyZmQ2ZGE0OTJmYmI0ZjUxMzQxNDc0YjljYw@valued-lion-111655.upstash.io:6379', '# 4. IMGUR API': '', '# Обязательно: Client ID для анонимной загрузки сгенерированных карт': '', '# Регистрация: https://api.imgur.com/oauth2/addclient': '', 'IMGUR_CLIENT_ID': 'your_client_id_here', '# 5. THREADS GRAPH API': '', '# Обязательно: User ID и Long-Lived Access Token (60 дней) ': '', '# Токен необходимо рефрешить раз в месяц через cron': '', 'THREADS_USER_ID': '123456789012345', 'THREADS_ACCESS_TOKEN': 'EAAXXXXXXX_long_lived_token_here', '# 6. PORT (Express Server)': '', 'PORT': '8100', 'NODEJS_VERSION': '', 'HOST': 'fd00::7:6dd4', 'IP': 'fd00::7:6dd4'}, cwd: /home/groza-bot/www)
+[07/Jul/2026:21:56:39 +0200] [upstream] Upstream started PID: 2822860
+[07/Jul/2026:21:56:39 +0200] [upstream] [2822860] STDOUT: 
+[07/Jul/2026:21:56:39 +0200] [upstream] [2822860] STDOUT: > groza@1.0.0 start
+[07/Jul/2026:21:56:39 +0200] [upstream] [2822860] STDOUT: > if [ -f modules.zip ]; then unzip -qo modules.zip && rm -f modules.zip; fi; node dist/index.js
+[07/Jul/2026:21:56:39 +0200] [upstream] [2822860] STDOUT: 
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDOUT: ◇ injected env (1) from dist/config.env // tip: ◈ secrets for agents [www.dotenvx.com]
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDOUT: Bootstrapping Groza Single-Worker...
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDERR: (node:2822885) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDERR: In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDERR: 
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDERR: To prepare for this change:
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDERR: - If you want the current behavior, explicitly use 'sslmode=verify-full'
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDERR: - If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDERR: 
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDERR: See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+[07/Jul/2026:21:56:40 +0200] [upstream] [2822860] STDERR: (Use `node --trace-warnings ...` to show where the warning was created)
+[07/Jul/2026:21:56:42 +0200] [upstream] [2822860] STDOUT: Database initialized successfully.
+[07/Jul/2026:21:56:42 +0200] [upstream] [2822860] STDOUT: Telegram bot is running in WEBHOOK mode on Alwaysdata.
+[07/Jul/2026:21:56:42 +0200] [upstream] [2822860] STDOUT: Starting Blitzortung real-time listener...
+[07/Jul/2026:21:56:42 +0200] [upstream] [2822860] STDOUT: Groza Single-Worker is running.
+[07/Jul/2026:21:56:42 +0200] [upstream] [2822860] STDOUT: API and Static server running on fd00::7:6dd4:8100
+[07/Jul/2026:21:56:42 +0200] [upstream] [2822860] STDOUT: Telegram webhook successfully set to: https://groza-bot.alwaysdata.net/api/telegram-webhook-8516017309
+[07/Jul/2026:21:56:42 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:21:56:43 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Incoming: GET /api/telegram-webhook-8516017309 (original: /api/telegram-webhook-8516017309)
+[07/Jul/2026:21:56:43 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:21:57:42 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:57:47 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:21:58:47 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:58:52 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:21:59:52 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:21:59:58 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:00:58 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:01:03 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:02:03 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:02:08 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:03:08 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:03:13 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:04:13 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:04:18 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:05:18 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:05:23 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:06:23 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:06:28 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:07:28 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:07:33 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:08:33 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:08:39 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:09:39 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:09:44 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:10:44 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:10:49 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:11:49 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:11:54 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:12:54 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:12:59 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:13:59 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:14:04 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:15:04 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:15:09 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:16:09 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:16:14 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:17:14 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:17:20 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:18:20 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:18:25 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:19:25 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:19:30 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:20:01 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309 (original: /api/telegram-webhook-8516017309)
+[07/Jul/2026:22:20:01 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:22:20:01 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] WEBHOOK HANDLER ENTERED!
+[07/Jul/2026:22:20:01 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Request headers: {"host":"groza-bot.alwaysdata.net","content-type":"application/json","accept-encoding":"gzip, deflate","content-length":"329","x-real-ip":"91.108.5.47","via":"1.1 alproxy","x-forwarded-proto":"https"}
+[07/Jul/2026:22:20:01 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Body data read complete. Length: 329
+[07/Jul/2026:22:20:01 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Body content: {"update_id":740518486,
+[07/Jul/2026:22:20:01 +0200] [upstream] [2822860] STDOUT: "message":{"message_id":84,"from":{"id":7675681343,"is_bot":false,"first_name":"Nik","username":"NikiBelr","language_code":"ru"},"chat":{"id":7675681343,"first_name":"Nik","username":"NikiBelr","type":"private"},"date":1783455601,"text":"/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}
+[07/Jul/2026:22:20:02 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] bot.handleUpdate completed successfully.
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Incoming: GET /index.html (original: /index.html)
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Incoming: GET /style.css (original: /style.css)
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Incoming: GET /radar.css (original: /radar.css)
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Incoming: GET /app.js (original: /app.js)
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Incoming: GET /favicon.ico (original: /favicon.ico)
+[07/Jul/2026:22:20:06 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:22:20:25 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Incoming: POST /api/telegram-webhook-8516017309 (original: /api/telegram-webhook-8516017309)
+[07/Jul/2026:22:20:25 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Express Stack: []
+[07/Jul/2026:22:20:25 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] WEBHOOK HANDLER ENTERED!
+[07/Jul/2026:22:20:25 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Request headers: {"host":"groza-bot.alwaysdata.net","content-type":"application/json","accept-encoding":"gzip, deflate","content-length":"396","x-real-ip":"91.108.5.47","via":"1.1 alproxy","x-forwarded-proto":"https"}
+[07/Jul/2026:22:20:25 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Body data read complete. Length: 396
+[07/Jul/2026:22:20:25 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] Body content: {"update_id":740518487,
+[07/Jul/2026:22:20:25 +0200] [upstream] [2822860] STDOUT: "message":{"message_id":86,"from":{"id":7675681343,"is_bot":false,"first_name":"Nik","username":"NikiBelr","language_code":"ru"},"chat":{"id":7675681343,"first_name":"Nik","username":"NikiBelr","type":"private"},"date":1783455625,"web_app_data":{"button_text":"\ud83d\uddfa \u041a\u0430\u0440\u0442\u0430","data":"{\"lat\":48.70085411858841,\"lon\":23.431304149693347}"}}}
+[07/Jul/2026:22:20:26 +0200] [upstream] [2822860] STDOUT: [HTTP-DEBUG] bot.handleUpdate completed successfully.
+[07/Jul/2026:22:20:30 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:20:35 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:21:35 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:21:40 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:22:40 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:22:45 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:23:45 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:23:50 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:24:50 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:24:55 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:25:55 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:26:01 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:27:01 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:27:06 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:28:06 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:28:11 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:29:11 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:29:16 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:30:16 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:30:21 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:31:21 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:31:26 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:32:26 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:32:31 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:33:31 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:33:36 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:34:36 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:34:42 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:35:42 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:35:47 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:36:47 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:36:52 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:37:52 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:37:57 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:38:57 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:39:02 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:40:02 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:40:07 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:41:07 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:41:12 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:42:12 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:42:17 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:43:17 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:43:23 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:44:23 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:44:28 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:45:28 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:45:33 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:46:33 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:46:38 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:47:38 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:47:43 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:48:43 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:48:48 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:49:48 +0200] [upstream] [2822860] STDOUT: Blitzortung WebSocket closed. Reconnecting in 5 seconds...
+[07/Jul/2026:22:49:53 +0200] [upstream] [2822860] STDOUT: Blitzortung connected
+[07/Jul/2026:22:50:39 +0200] [upstream] [2822860] SIGTERM sent to upstream
+[07/Jul/2026:22:50:39 +0200] [upstream] [2822860] Upstream stopped (reason: idle)

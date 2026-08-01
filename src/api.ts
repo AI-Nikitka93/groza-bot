@@ -4,8 +4,16 @@ import path from 'path';
 import { getRecentStrikes } from './alerting/store';
 import { ENV } from './env';
 import { incrementRequestCount, getRequestCountForPeriod } from './cache/upstash';
-import { insertErrorLog, getErrorsCount, getRecentErrors } from './db/tembo';
-import { bot } from './bot';
+import { insertErrorLog, getErrorsCount, getRecentErrors, getUserLocation, upsertUserLocation } from './db/tembo';
+import { bot, pingTelegram } from './bot';
+import { MetricsTracker } from './observability';
+import { pingDatabase } from './db/tembo';
+import { pingRedis } from './cache/upstash';
+import { pingBullMQ, telegramQueue } from './alerting/queue';
+import { pingBlitzortung } from './weather/lightning_listener';
+import { EventEmitter } from 'events';
+
+export const strikeEmitter = new EventEmitter();
 
 export function startApiServer() {
   const app = express();
@@ -68,17 +76,17 @@ export function startApiServer() {
         }
         
         try {
-          // Передаем распарсенный апдейт напрямую в Telegraf
-          await bot.handleUpdate(parsedBody, res);
-          console.log('[HTTP-DEBUG] bot.handleUpdate completed successfully.');
+          // Возвращаем 200 OK сразу, чтобы Telegram не отваливался по таймауту
           if (!res.headersSent) {
             res.sendStatus(200);
           }
+          // Передаем распарсенный апдейт напрямую в Telegraf без res (чтобы он юзал HTTP API)
+          bot.handleUpdate(parsedBody).catch(err => {
+            console.error('[HTTP-DEBUG] Error handling Telegram update inside Telegraf:', err);
+          });
+          console.log('[HTTP-DEBUG] bot.handleUpdate triggered.');
         } catch (err: any) {
-          console.error('[HTTP-DEBUG] Error handling Telegram update:', err);
-          if (!res.headersSent) {
-            res.sendStatus(500);
-          }
+          console.error('[HTTP-DEBUG] Error processing update in wrapper:', err);
         }
       });
     });
@@ -122,13 +130,149 @@ export function startApiServer() {
     }
   });
 
-  // Отдача статики из папки public (правильный путь для build/dist)
-  app.use(express.static(path.join(__dirname, '../public')));
+  // Статические файлы WebApp (с запретом кэширования для index.html)
+  app.use(express.static(path.join(__dirname, '../public'), {
+    setHeaders: (res, reqPath, stat) => {
+      if (reqPath.endsWith('index.html')) {
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+        res.set('Pragma', 'no-cache');
+        res.set('Expires', '0');
+      }
+    }
+  }));
+
+  // Отдельные эндпоинты Health Checks (без Rate Limit API, чтобы мониторинг всегда проходил)
+  app.get('/health', (req, res) => {
+    const { status } = MetricsTracker.getStatus();
+    res.status(status === 'failed' || status === 'starting' ? 503 : 200).json({ status: status });
+  });
+
+  app.get('/ready', (req, res) => {
+    const ready = MetricsTracker.isReady();
+    res.status(ready ? 200 : 503).json({ status: ready ? 'ready' : 'not_ready' });
+  });
+
+  app.get('/health/details', async (req, res) => {
+    const { status, tree } = MetricsTracker.getStatus();
+    const metrics = MetricsTracker.getMetrics();
+    
+    let queueLength = 0;
+    try {
+      queueLength = await telegramQueue.count();
+    } catch (e) {}
+
+    res.status((status === 'failed' || status === 'starting') ? 503 : 200).json({
+      status: status,
+      dependencyTree: {
+        Bot: tree
+      },
+      metrics: {
+        memory: metrics.memoryUsageMB,
+        pid: process.pid,
+        queue: queueLength,
+        uptime: metrics.processUptimeSeconds,
+        restartCount: process.env.RESTART_COUNT || 0,
+        crashReason: process.env.CRASH_REASON || null
+      }
+    });
+  });
+
+  app.use('/api/location', express.json());
+
+  app.post('/api/location', async (req, res) => {
+    try {
+      const { userId, lat, lon } = req.body;
+      if (!userId || lat === undefined || lon === undefined) {
+        return res.status(400).json({ error: 'Missing parameters' });
+      }
+      
+      const latNum = Number(lat);
+      const lonNum = Number(lon);
+      await upsertUserLocation(userId, latNum, lonNum);
+      
+      const timestamp = Date.now();
+      const userUrl = `${ENV.WEBAPP_URL}?lat=${latNum}&lon=${lonNum}&v=${timestamp}`;
+      
+      try {
+        await bot.telegram.setChatMenuButton({
+          chatId: userId,
+          menuButton: {
+            type: 'web_app',
+            text: '🗺 Моя локация',
+            web_app: { url: userUrl }
+          }
+        } as any);
+      } catch (e) {
+        console.error('Failed to update chat menu button on api', e);
+      }
+      
+      try {
+        await bot.telegram.sendMessage(
+          userId, 
+          '✅ Локация сохранена. Зона наблюдения до 30 км активирована. Мы уведомим вас при возникновении грозовой угрозы по Индексу Опасности!'
+        );
+      } catch (e) {
+        console.error('Failed to send confirmation message', e);
+      }
+
+      res.json({ success: true });
+    } catch(e) {
+      console.error('Error in /api/location:', e);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
 
   // Эндпоинт для активных молний
+  app.get('/api/user/:id/location', async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id, 10);
+      if (isNaN(userId)) return res.status(400).json({ error: 'Invalid user ID' });
+      
+      const loc = await getUserLocation(userId);
+      if (loc) {
+        res.json(loc);
+      } else {
+        res.status(404).json({ error: 'Not found' });
+      }
+    } catch(e) {
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+
   app.get('/api/strikes', (req, res) => {
     const strikes = getRecentStrikes();
     res.json({ strikes });
+  });
+
+  // Server-Sent Events endpoint for real-time live map updates
+  app.get('/api/strikes/stream', (req, res) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
+
+    const onStrike = (strike: any) => {
+      res.write(`data: ${JSON.stringify(strike)}\n\n`);
+    };
+
+    strikeEmitter.on('strike', onStrike);
+
+    req.on('close', () => {
+      strikeEmitter.removeListener('strike', onStrike);
+    });
+  });
+
+  app.get('/api/debug-db', async (req, res) => {
+    try {
+      const pool = require('./db/tembo').pool || (require('pg').Pool && new (require('pg').Pool)({connectionString: require('./env').ENV.DATABASE_URL}));
+      const { rows } = await pool.query('SELECT * FROM users ORDER BY updated_at DESC LIMIT 5');
+      res.json({ 
+        db_url: require('./env').ENV.DATABASE_URL ? require('./env').ENV.DATABASE_URL.substring(0, 30) + '...' : 'undefined',
+        rows
+      });
+    } catch(e: any) {
+      res.json({ error: e.message });
+    }
   });
 
   // Эндпоинт для мониторинга статистики

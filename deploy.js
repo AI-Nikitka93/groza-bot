@@ -1,5 +1,12 @@
 const { Client } = require('ssh2');
 const fs = require('fs');
+const { execSync } = require('child_process');
+
+console.log('Building project...');
+execSync('npm run build', { stdio: 'inherit' });
+console.log('Zipping files...');
+try { execSync('del bot.zip', { stdio: 'ignore' }); } catch(e){}
+execSync('npx bestzip bot.zip dist package.json package-lock.json public config.json watchdog.js', { stdio: 'inherit' });
 
 console.log('Starting deployment to Alwaysdata...');
 
@@ -14,8 +21,26 @@ conn.on('ready', () => {
     
     writeStream.on('close', () => {
       console.log('Upload complete. Unzipping...');
-      // Unzip and clean up
-      conn.exec('cd /home/groza-bot/www && unzip -o bot.zip && rm bot.zip', (err, stream) => {
+      // Unzip, check .env, and clean up
+      const script = `
+        cd /home/groza-bot/www && 
+        unzip -o bot.zip && 
+        rm bot.zip && 
+        mkdir -p tmp && 
+        node -e "
+          require('dotenv').config();
+          const req = ['TELEGRAM_BOT_TOKEN', 'DATABASE_URL', 'REDIS_URL'];
+          const missing = req.filter(k => !process.env[k]);
+          if(missing.length > 0) {
+            console.error('PREFLIGHT FAILED: Missing vars: ' + missing.join(', '));
+            process.exit(1);
+          }
+          console.log('PREFLIGHT SUCCESS: All vars present.');
+        " && 
+        npm install --omit=dev &&
+        touch tmp/restart.txt
+      `;
+      conn.exec(script, (err, stream) => {
         if (err) throw err;
         stream.on('close', (code, signal) => {
           console.log('Extraction complete with code ' + code);
@@ -35,5 +60,5 @@ conn.on('ready', () => {
   host: 'ssh-groza-bot.alwaysdata.net',
   port: 22,
   username: 'groza-bot',
-  password: '2734010Ab!!))'
+  password: process.env.DEPLOY_PASSWORD
 });

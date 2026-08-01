@@ -3,12 +3,11 @@ const { Client } = require('ssh2');
 const conn = new Client();
 conn.on('ready', () => {
   console.log('SSH Connection Established.');
-  conn.exec("ps -u groza-bot -o pid,cmd | awk '/node/ {print $1}' | xargs -r kill -9", (err, stream) => {
+  conn.exec("tail -n 50 ~/nohup.out", (err, stream) => {
     if (err) throw err;
     let stdout = '';
     let stderr = '';
     stream.on('close', (code, signal) => {
-      console.log('kill command exited with code ' + code);
       console.log('================ STDOUT ================');
       console.log(stdout);
       console.log('================ STDERR ================');

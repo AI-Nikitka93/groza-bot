@@ -1,0 +1,36 @@
+{
+  "riskModel": {
+    "maxRadiusMeters": 30000,
+    "maxDensityScalar": 20,
+    "fastSpeedKmh": 40,
+    "trendThreshold": 3,
+    "weights": {
+      "distance": 1.20,
+      "density": 3.50
+    },
+    "multipliers": {
+      "directionDirect": 1.20,
+      "directionAway": 0.40,
+      "etaImminent": 1.15,
+      "speedFast": 1.10,
+      "trendGrowing": 1.10
+    },
+    "emaAlpha": 0.7
+  },
+  "confidenceModel": {
+    "baseDeduction": {
+      "trajectory": 45,
+      "age": 50,
+      "eta": 50
+    },
+    "weights": {
+      "trajectoryStability": 0.40,
+      "stormAge": 0.30,
+      "etaValidity": 0.30
+    }
+  },
+  "allClear": {
+    "minutesWithoutLightning": 45,
+    "maxRiskScore": 15
+  }
+}

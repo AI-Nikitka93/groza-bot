@@ -4,12 +4,25 @@ import { handleStart } from './handlers/onboarding';
 import { handleLocation } from './handlers/location';
 import { handleWebAppData } from './handlers/webapp';
 import { handleStats } from './handlers/stats';
+import { handleHealth } from './handlers/health';
 import { incrementRequestCount } from '../cache/upstash';
 import { getUserLocation, insertErrorLog } from '../db/tembo';
 
 // Mock token if not provided for build passing
 const token = ENV.TELEGRAM_BOT_TOKEN || '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11';
 export const bot = new Telegraf(token);
+
+export async function pingTelegram(): Promise<boolean> {
+  try {
+    const res = await Promise.race([
+      bot.telegram.getMe(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+    ]) as any;
+    return !!res.id;
+  } catch (err) {
+    return false;
+  }
+}
 
 // Глобальный middleware для инкрементирования счетчика входящих запросов бота при каждом апдейте
 bot.use((ctx, next) => {
@@ -42,6 +55,8 @@ bot.catch(async (err: any, ctx) => {
 
 bot.start(handleStart);
 bot.command('stats', handleStats);
+bot.command('health', handleHealth);
+bot.command('status', handleHealth);
 bot.on('location', handleLocation);
 bot.on('web_app_data', handleWebAppData);
 
@@ -49,6 +64,9 @@ export async function startBot() {
   const isProd = process.env.NODE_ENV === 'production' || (ENV.WEBAPP_URL && ENV.WEBAPP_URL.includes('alwaysdata.net'));
   
   if (ENV.TELEGRAM_BOT_TOKEN) {
+    bot.telegram.setChatMenuButton({ menuButton: { type: 'web_app', text: '🗺 Моя локация', web_app: { url: `${ENV.WEBAPP_URL}?v=3` } } })
+      .catch(err => console.error('Failed to set chat menu button:', err));
+
     if (isProd) {
       console.log('Telegram bot is running in WEBHOOK mode on Alwaysdata.');
       return;

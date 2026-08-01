@@ -1,0 +1,707 @@
+const fs = require('fs');
+
+const data = `### test-mqtt.js
+- **Size**: 593 bytes
+- **Lines**: 21 lines
+- **Language**: JavaScript
+- **Purpose**: Test script for checking connection to Blitzortung MQTT broker.
+- **Imports**: mqtt
+- **Exports**: None
+- **Functions**: None (callbacks used)
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: mqtt, client
+- **ENV variables**: None
+- **External APIs**: mqtt://blitzortung.ha.sed.pl:1883
+- **DB calls**: None
+- **Dependencies**: mqtt
+- **Imported by**: None
+- **Imports from**: mqtt
+- **Events Emitted**: None
+- **Events Received**: connect, message, error
+- **Possible Failure Points**: Network unavailability, Broker down
+- **TODO/FIXME**: None
+- **Brief Logic**: Connects to the MQTT server, subscribes to all topics, logs the first message received and exits successfully. Exits with failure code on error.
+- **Code Quotes (Proofs)**: const client = mqtt.connect('mqtt://blitzortung.ha.sed.pl:1883');
+- **Confidence**: 100%
+
+### test-recovery-db.js
+- **Size**: 294 bytes
+- **Lines**: 11 lines
+- **Language**: JavaScript
+- **Purpose**: Test script to simulate a Postgres database connection error and verify the error handler catches it.
+- **Imports**: pg
+- **Exports**: None
+- **Functions**: None (callbacks used)
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: Pool, pool
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: Simulated via pg pool
+- **Dependencies**: pg
+- **Imported by**: None
+- **Imports from**: pg
+- **Events Emitted**: error
+- **Events Received**: error
+- **Possible Failure Points**: Handler not attached properly
+- **TODO/FIXME**: None
+- **Brief Logic**: Instantiates a pg Pool, attaches an error listener, and emits a fake error event. The listener catches it and exits with code 0.
+- **Code Quotes (Proofs)**: pool.emit('error', new Error('Simulated pool error'));
+- **Confidence**: 100%
+
+### test-recovery-uncaught.js
+- **Size**: 255 bytes
+- **Lines**: 10 lines
+- **Language**: JavaScript
+- **Purpose**: Test script to verify the uncaughtException handler functionality.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None (callbacks used)
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: uncaughtException
+- **Possible Failure Points**: Global handler overriding
+- **TODO/FIXME**: None
+- **Brief Logic**: Attaches an uncaughtException handler, then throws an Error in a setTimeout block to trigger a crash. The handler catches it and exits with code 0.
+- **Code Quotes (Proofs)**: process.on('uncaughtException', (err) => { ... });
+- **Confidence**: 100%
+
+### test-recovery-ws.js
+- **Size**: 719 bytes
+- **Lines**: 29 lines
+- **Language**: JavaScript
+- **Purpose**: Test script to verify WebSocket reconnection logic after connection drops.
+- **Imports**: ws
+- **Exports**: None
+- **Functions**: connect
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: WebSocket
+- **ENV variables**: None
+- **External APIs**: wss://echo.websocket.org
+- **DB calls**: None
+- **Dependencies**: ws
+- **Imported by**: None
+- **Imports from**: ws
+- **Events Emitted**: None
+- **Events Received**: open, close, error
+- **Possible Failure Points**: External echo server down, recursive stack limit if timeout removed
+- **TODO/FIXME**: None
+- **Brief Logic**: Connects to a WS echo server, forcibly closes the connection on open to simulate a drop, increments a reconnect counter, and attempts to reconnect. Exits successfully on the first successful reconnect trigger.
+- **Code Quotes (Proofs)**: ws.on('close', () => { reconnectCount++; ... setTimeout(connect, 1000); });
+- **Confidence**: 100%
+
+### test-ws.js
+- **Size**: 346 bytes
+- **Lines**: 17 lines
+- **Language**: JavaScript
+- **Purpose**: Test script to verify standard WebSocket connection to Blitzortung.
+- **Imports**: ws
+- **Exports**: None
+- **Functions**: None (callbacks used)
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: WebSocket, ws
+- **ENV variables**: None
+- **External APIs**: wss://ws1.blitzortung.org/
+- **DB calls**: None
+- **Dependencies**: ws
+- **Imported by**: None
+- **Imports from**: ws
+- **Events Emitted**: None
+- **Events Received**: open, message, error
+- **Possible Failure Points**: Blitzortung WS server down
+- **TODO/FIXME**: None
+- **Brief Logic**: Connects to the Blitzortung WebSocket server, sends a test payload \`{a: 111}\`, waits for a message, logs it and closes the connection.
+- **Code Quotes (Proofs)**: const ws = new WebSocket('wss://ws1.blitzortung.org/');
+- **Confidence**: 100%
+
+### test_crash.js
+- **Size**: 49 bytes
+- **Lines**: 3 lines
+- **Language**: JavaScript
+- **Purpose**: Helper script to intentionally crash the process, used for testing watchdog recovery.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: test_recovery_watchdog.js, test_watchdog.js
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Logs a crash message and immediately exits the process with a non-zero exit code (1).
+- **Code Quotes (Proofs)**: process.exit(1);
+- **Confidence**: 100%
+
+### test_recovery_watchdog.js
+- **Size**: 1169 bytes
+- **Lines**: 35 lines
+- **Language**: JavaScript
+- **Purpose**: Tests the watchdog process restart loop and backoff functionality.
+- **Imports**: child_process
+- **Exports**: None
+- **Functions**: startProcess
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: spawn
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: child_process
+- **Events Emitted**: None
+- **Events Received**: close
+- **Possible Failure Points**: Child spawn failure
+- **TODO/FIXME**: None
+- **Brief Logic**: Spawns 'test_crash.js' in a loop. Implements exponential backoff on crash and detects a crash loop if restart count exceeds 5, exiting the script if so.
+- **Code Quotes (Proofs)**: const delay = Math.pow(2, restartCount) * 1000;
+- **Confidence**: 100%
+
+### test_watchdog.js
+- **Size**: 1127 bytes
+- **Lines**: 37 lines
+- **Language**: JavaScript
+- **Purpose**: Similar to test_recovery_watchdog.js, verifies watchdog recovery mode.
+- **Imports**: child_process
+- **Exports**: None
+- **Functions**: startProcess
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: spawn
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: child_process
+- **Events Emitted**: None
+- **Events Received**: close
+- **Possible Failure Points**: Child spawn failure
+- **TODO/FIXME**: None
+- **Brief Logic**: Spawns a crashing child process. If it crashes 5 times, enters a 5-second recovery mode before resetting the counter and trying again.
+- **Code Quotes (Proofs)**: if (restartCount > 5) { console.error(\`\\n[STATE] RECOVERY_ATTEMPT Entering 5-second recovery mode...\`);
+- **Confidence**: 100%
+
+### test_watchdog.ps1
+- **Size**: 879 bytes
+- **Lines**: 24 lines
+- **Language**: PowerShell
+- **Purpose**: PowerShell script to start the watchdog and test if it restarts a killed child process.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: WMI queries failing or process taking too long to start.
+- **TODO/FIXME**: None
+- **Brief Logic**: Starts watchdog.js, waits, finds the child process, kills it, waits again, and asserts that a new child process with a different PID has been spawned. Finally, kills the watchdog.
+- **Code Quotes (Proofs)**: if ($newChild -and $newChild.ProcessId -ne $child.ProcessId) {
+- **Confidence**: 100%
+
+### tsconfig.json
+- **Size**: 276 bytes
+- **Lines**: 14 lines
+- **Language**: JSON (TypeScript Configuration)
+- **Purpose**: Configuration file for TypeScript compiler.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: Syntax error breaks build
+- **TODO/FIXME**: None
+- **Brief Logic**: Configures TypeScript compiler to output to ./dist, use es2022 target, strict mode, and include src/**/* files.
+- **Code Quotes (Proofs)**: "outDir": "./dist", "rootDir": "./src"
+- **Confidence**: 100%
+
+### upload-kill.js
+- **Size**: 610 bytes
+- **Lines**: 21 lines
+- **Language**: JavaScript
+- **Purpose**: Utility script to upload kill.php and .htaccess to FTP server.
+- **Imports**: basic-ftp
+- **Exports**: None
+- **Functions**: run
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: ftp
+- **ENV variables**: None
+- **External APIs**: FTP (ftp-groza-bot.alwaysdata.net)
+- **DB calls**: None
+- **Dependencies**: basic-ftp
+- **Imported by**: None
+- **Imports from**: basic-ftp
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: Incorrect credentials, FTP server unreachable
+- **TODO/FIXME**: None
+- **Brief Logic**: Connects to the alwaysdata FTP server and uploads kill.php and .htaccess files to the remote /www directory.
+- **Code Quotes (Proofs)**: await client.uploadFrom('kill.php', '/www/kill.php');
+- **Confidence**: 100%
+
+### upload-php.js
+- **Size**: 562 bytes
+- **Lines**: 21 lines
+- **Language**: JavaScript
+- **Purpose**: Utility script to upload crash.php to FTP server.
+- **Imports**: basic-ftp
+- **Exports**: None
+- **Functions**: run
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: ftp
+- **ENV variables**: None
+- **External APIs**: FTP (ftp-groza-bot.alwaysdata.net)
+- **DB calls**: None
+- **Dependencies**: basic-ftp
+- **Imported by**: None
+- **Imports from**: basic-ftp
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: Network, credentials
+- **TODO/FIXME**: None
+- **Brief Logic**: Connects to FTP, navigates to 'www' directory and uploads crash.php.
+- **Code Quotes (Proofs)**: await client.uploadFrom('crash.php', 'crash.php');
+- **Confidence**: 100%
+
+### watchdog.js
+- **Size**: 1933 bytes
+- **Lines**: 60 lines
+- **Language**: JavaScript
+- **Purpose**: Main process manager that runs the Groza bot and restarts it upon crashes.
+- **Imports**: child_process
+- **Exports**: None
+- **Functions**: startProcess
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: spawn
+- **ENV variables**: RESTART_COUNT, LAST_CRASH, CRASH_REASON, WATCHDOG_STATE, AVG_RESTART_TIME_MS
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: child_process
+- **Imported by**: None
+- **Imports from**: child_process
+- **Events Emitted**: None
+- **Events Received**: close
+- **Possible Failure Points**: Child script not found
+- **TODO/FIXME**: None
+- **Brief Logic**: Starts dist/index.js as a child process. Injects crash history and state via environment variables. Restarts child automatically on exit with exponential backoff up to 60s. Resets restart count if process runs for over 30 seconds.
+- **Code Quotes (Proofs)**: const child = spawn('node', ['dist/index.js'], ...
+- **Confidence**: 100%
+
+### zip-modules.js
+- **Size**: 617 bytes
+- **Lines**: 24 lines
+- **Language**: JavaScript
+- **Purpose**: Utility script to compress the node_modules folder into a zip archive.
+- **Imports**: fs, archiver
+- **Exports**: None
+- **Functions**: None (callbacks used)
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: fs, archiver, output, archive
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: archiver
+- **Imported by**: None
+- **Imports from**: fs, archiver
+- **Events Emitted**: None
+- **Events Received**: close, error
+- **Possible Failure Points**: Insufficient disk space
+- **TODO/FIXME**: None
+- **Brief Logic**: Creates a write stream for modules.zip, initializes archiver with max compression, adds the node_modules directory, and finalizes the archive.
+- **Code Quotes (Proofs)**: archive.directory('node_modules/', 'node_modules');
+- **Confidence**: 100%
+
+### Docs/DESIGN.md
+- **Size**: 8142 bytes
+- **Lines**: 163 lines
+- **Language**: Markdown
+- **Purpose**: System Design Specification detailing mathematical and visual parameters of the design system.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Describes design tokens (colors, typography, spacing, Z-indices), Map render rules for layers (Base Tile, Concentric Circles, Hex Grid Density, User Position, SCIT Vector), Safe Area Scheme for mobile TMA, and Component Specs.
+- **Code Quotes (Proofs)**: # SYSTEM DESIGN SPECIFICATION: Personal Pocket Lightning Rod
+- **Confidence**: 100%
+
+### Docs/PRODUCTION_SETUP.md
+- **Size**: 4790 bytes
+- **Lines**: 54 lines
+- **Language**: Markdown
+- **Purpose**: Production setup guide for configuring the Telegram bot, Imgur API, Threads API, and Database.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: TELEGRAM_BOT_TOKEN, IMGUR_CLIENT_ID, THREADS_ACCESS_TOKEN, THREADS_USER_ID, DATABASE_URL
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Provides step-by-step instructions to register a bot via BotFather, get Imgur API keys, generate and refresh Threads API tokens, and connect to Tembo PostGIS and Upstash Redis.
+- **Code Quotes (Proofs)**: # Пошаговое руководство: Запуск в Production (Zero-Cost Setup)
+- **Confidence**: 100%
+
+### Docs/PROJECT_HISTORY.md
+- **Size**: 11894 bytes
+- **Lines**: 103 lines
+- **Language**: Markdown
+- **Purpose**: Change log and project history tracking design decisions and feature implementations over time.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Documents various phases like Zero-Cost Architecture Research, Product Strategy, UX/UI Research, QA Automation, and recent fixes (e.g. geometry -> geography database column type).
+- **Code Quotes (Proofs)**: Исправлен тип колонки location в таблице users (geometry -> geography)
+- **Confidence**: 100%
+
+### Docs/QA_REPORT.md
+- **Size**: 3337 bytes
+- **Lines**: 39 lines
+- **Language**: Markdown
+- **Purpose**: QA report documenting the results of autonomous conversational and API contract tests.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Outlines tests performed using MockTelegrafContext, showing 100% success for Onboarding, Location Handlers, and GET /api/strikes.
+- **Code Quotes (Proofs)**: Статус: **PASS (100% SUCCESS)**
+- **Confidence**: 100%
+
+### Docs/assets.md
+- **Size**: 4165 bytes
+- **Lines**: 42 lines
+- **Language**: Markdown
+- **Purpose**: Registry of verified graphical and map assets used in the application.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Details icons from Lucide, GIS tile servers (CartoDB Dark Matter, OSM Standard) and lists their open licenses.
+- **Code Quotes (Proofs)**: Все иконки заимствованы из библиотеки **Lucide Icons**
+- **Confidence**: 100%
+
+### Docs/copy.md
+- **Size**: 5992 bytes
+- **Lines**: 88 lines
+- **Language**: Markdown
+- **Purpose**: Copy Deck holding the text and microcopy used for user onboarding, alerts, and safety guidelines.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Contains templates for greeting messages, critical (5km) and warning (15km) alerts, trust calibration, and safety cards for various locations (water, forest, city, home).
+- **Code Quotes (Proofs)**: 🚨 МОЛНИЯ В {distance} КМ! Срочно уйдите с открытого пространства!
+- **Confidence**: 100%
+
+### Docs/data_access_decision.md
+- **Size**: 4974 bytes
+- **Lines**: 47 lines
+- **Language**: Markdown
+- **Purpose**: Documentation of data access and infrastructure architecture decisions.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Explains the shift to Tembo (PostGIS), Serv00.com, and Blitzortung via an MQTT Proxy. Highlights the rationale behind these decisions to maintain a zero-cost stack.
+- **Code Quotes (Proofs)**: Замена Supabase (500 МБ) на **Tembo** (10 ГБ) с применением MULTIPOINT кластеризации.
+- **Confidence**: 100%
+
+### Docs/design_soul_document.md
+- **Size**: 11077 bytes
+- **Lines**: 85 lines
+- **Language**: Markdown
+- **Purpose**: Visual concept reference and inspiration board.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Covers inspirations from aviation UI (Garmin G1000, F-35), defines positioning ("tactical radar"), UI requirements, and anti-patterns.
+- **Code Quotes (Proofs)**: Позиционирование: Ваш личный тактический радар выживания.
+- **Confidence**: 100%
+
+### Docs/design_ux_research.md
+- **Size**: 9860 bytes
+- **Lines**: 97 lines
+- **Language**: Markdown
+- **Purpose**: UX Research report detailing cognitive psychology behind emergency alerts.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Discusses Hex grid density mapping, WCAG AAA compliant colors (Neon Coral Red vs Cyber Neon Yellow), and inverted pyramid communication patterns.
+- **Code Quotes (Proofs)**: 1. Главное (Lead): Каков следующий шаг? [Угроза] + [Действие СЕЙЧАС].
+- **Confidence**: 100%
+
+### Docs/product_strategy.md
+- **Size**: 7136 bytes
+- **Lines**: 67 lines
+- **Language**: Markdown
+- **Purpose**: Product Strategy defining positioning, anti-ban logic, deduplication rules, and retention scenarios.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Details target segments, Threads API pacing rules, Telegram geofencing (15km/5km logic with cooldowns), and winter retention blocks.
+- **Code Quotes (Proofs)**: Если в период 30-минутного Mute молния пробивает Critical-радиус (5 км), бот игнорирует Mute...
+- **Confidence**: 100%
+
+### Docs/Идея.txt
+- **Size**: 36793 bytes
+- **Lines**: 231 lines
+- **Language**: Text
+- **Purpose**: Original idea document defining the product vision, target audience, features, and roadmaps.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Lays out the one-liner, core problem, product shape, scope of MVP, constraints, and data models for a Telegram and Threads bot that warns about lightning.
+- **Code Quotes (Proofs)**: Я хочу сделать бота в телеграм и бота или как то там в Thaerds который будет отслеживать молнии...
+- **Confidence**: 100%
+
+### config/assets_manifest.json
+- **Size**: 2096 bytes
+- **Lines**: 20 lines
+- **Language**: JSON
+- **Purpose**: JSON manifest of all required static icons and map URLs.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Maps keys to SVG string icons, holds tile server URLs, and lists licensing details.
+- **Code Quotes (Proofs)**: "primary": "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+- **Confidence**: 100%
+
+### config/data_access_config.json
+- **Size**: 1223 bytes
+- **Lines**: 54 lines
+- **Language**: JSON
+- **Purpose**: Configuration outlining external services, databases, infrastructure, and architectural choices.
+- **Imports**: None
+- **Exports**: None
+- **Functions**: None
+- **Classes**: None
+- **Interfaces**: None
+- **Types**: None
+- **Constants**: None
+- **ENV variables**: None
+- **External APIs**: None
+- **DB calls**: None
+- **Dependencies**: None
+- **Imported by**: None
+- **Imports from**: None
+- **Events Emitted**: None
+- **Events Received**: None
+- **Possible Failure Points**: None
+- **TODO/FIXME**: None
+- **Brief Logic**: Configures 'blitzortung' as primary lightning source, Threads broadcasting rules, Tembo as DB provider, and Upstash Redis for cache.
+- **Code Quotes (Proofs)**: "provider": "blitzortung"
+- **Confidence**: 100%
+\`;
+
+fs.writeFileSync('m:\\\\Projects\\\\Bot\\\\Groza\\\\Docs\\\\_bible_part_4.md', data);
+console.log('Successfully wrote _bible_part_4.md');

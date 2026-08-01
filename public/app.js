@@ -2,6 +2,13 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
+// Ensure the map resizes when Telegram WebApp expands or keyboard opens
+tg.onEvent('viewportChanged', () => {
+  if (map) map.resize();
+});
+window.addEventListener('resize', () => {
+  if (map) map.resize();
+});
 // Токены цветов из DESIGN.md
 const COLORS = {
   warning: '#FFEA00',
@@ -11,6 +18,10 @@ const COLORS = {
 
 // Состояние
 let userLocation = [37.6173, 55.7558]; // По умолчанию (Москва)
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('lat') && urlParams.has('lon')) {
+  userLocation = [parseFloat(urlParams.get('lon')), parseFloat(urlParams.get('lat'))];
+}
 let map;
 
 function initMap() {
@@ -48,15 +59,31 @@ function initMap() {
       data: { type: 'FeatureCollection', features: [] }
     });
 
-    // Неоновое свечение (Halo)
+    // Неоновое свечение (Halo) - Динамическое, зависит от возраста молнии
     map.addLayer({
       id: 'strikes-halo',
       type: 'circle',
       source: 'strikes',
       paint: {
-        'circle-radius': 8,
-        'circle-color': COLORS.critical,
-        'circle-opacity': 0.4,
+        'circle-radius': [
+          'interpolate', ['linear'], ['get', 'age'],
+          0, 15,       // Fresh strike = 15px
+          1000, 8,     // 1 second old = 8px
+          60000, 4     // 1 minute old = 4px
+        ],
+        'circle-color': [
+          'interpolate', ['linear'], ['get', 'age'],
+          0, '#FFFFFF',        // White flash initially
+          500, COLORS.warning, // Yellow after 0.5s
+          1500, COLORS.critical, // Red after 1.5s
+          300000, '#660000'    // Dark red after 5 mins
+        ],
+        'circle-opacity': [
+          'interpolate', ['linear'], ['get', 'age'],
+          0, 1,
+          5000, 0.5,
+          900000, 0.1
+        ],
         'circle-blur': 1
       }
     });
@@ -67,14 +94,118 @@ function initMap() {
       type: 'circle',
       source: 'strikes',
       paint: {
-        'circle-radius': 3,
-        'circle-color': '#FFFFFF'
+        'circle-radius': [
+          'interpolate', ['linear'], ['get', 'age'],
+          0, 4,
+          2000, 2,
+          60000, 1
+        ],
+        'circle-color': '#FFFFFF',
+        'circle-opacity': [
+          'interpolate', ['linear'], ['get', 'age'],
+          0, 1,
+          30000, 0.8,
+          900000, 0.0
+        ]
       }
     });
 
     drawSafetyRings();
     initRainViewer();
+    startStrikesPolling();
   });
+}
+
+let allStrikesMap = new Map();
+let isAnimating = false;
+
+function updateMapFeatures() {
+  if (!map.getSource('strikes')) return;
+  const now = Date.now();
+  const features = [];
+  
+  for (const [id, s] of allStrikesMap.entries()) {
+    // If it's a new strike, set its receivedAt to now so it animates from 0
+    if (!s.receivedAt) {
+      s.receivedAt = now;
+    }
+    
+    const age = now - s.receivedAt;
+    
+    // Cleanup old strikes locally after 15 minutes
+    if (age > 15 * 60 * 1000) {
+      allStrikesMap.delete(id);
+      continue;
+    }
+    
+    features.push({
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [s.lon, s.lat] },
+      properties: { age: age }
+    });
+  }
+  
+  map.getSource('strikes').setData({ type: 'FeatureCollection', features });
+}
+
+function animateStrikes() {
+  updateMapFeatures();
+  requestAnimationFrame(animateStrikes);
+}
+
+function decodeLZW(e) {
+  let t = {};
+  let n = e.split('');
+  let r = n[0], o = r, a = [r], i = 256;
+  for (let s = 1; s < n.length; s++) {
+    let c = n[s].charCodeAt(0);
+    let u = c < 256 ? n[s] : t[c] ? t[c] : o + r;
+    a.push(u);
+    r = u.charAt(0);
+    t[i] = o + r;
+    i++;
+    o = u;
+  }
+  return a.join('');
+}
+
+function startStrikesPolling() {
+  // 1. Initial load for the past 15 minutes
+  fetch('/api/strikes').then(res => res.json()).then(data => {
+    if (data && data.strikes) {
+      data.strikes.forEach(s => {
+        const id = `${s.lat}-${s.lon}-${s.timestamp}`;
+        if (!allStrikesMap.has(id)) {
+          allStrikesMap.set(id, s);
+        }
+      });
+      if (!isAnimating) {
+        isAnimating = true;
+        animateStrikes();
+      }
+    }
+  }).catch(e => console.error('Failed to fetch historical strikes', e));
+
+  // 2. Real-time SSE from our own backend (bypassing Blitzortung IP blocks)
+  const evtSource = new EventSource('/api/strikes/stream');
+  evtSource.onmessage = (event) => {
+    try {
+      const strike = JSON.parse(event.data);
+      if (strike && strike.lat !== undefined && strike.lon !== undefined) {
+        const now = Date.now();
+        strike.receivedAt = now;
+        const id = `${strike.lat}-${strike.lon}-${now}`;
+        allStrikesMap.set(id, strike);
+      }
+    } catch(e) {}
+  };
+  evtSource.onopen = () => {
+    console.log('Live map connected to SSE.');
+    if (!isAnimating) {
+      isAnimating = true;
+      animateStrikes();
+    }
+  };
 }
 
 // Генератор GeoJSON точки
@@ -85,10 +216,25 @@ function getGeoJSONPoint(coords) {
   };
 }
 
-// Отрисовка колец 5км и 15км (приблизительный полигон через Turf.js или простая окружность)
+// Отрисовка зон безопасности (30км Наблюдение, 15км Опасность, 5км Критическая)
 function drawSafetyRings() {
-  // Для простоты используем circle-radius с интерполяцией по зуму 
-  // (В реальном проекте лучше использовать turf.circle для генерации GeoJSON полигонов)
+  map.addLayer({
+    id: 'ring-30km',
+    type: 'circle',
+    source: 'user-location',
+    paint: {
+      'circle-radius': [
+        'interpolate', ['exponential', 2], ['zoom'],
+        0, 0,
+        20, 30000
+      ],
+      'circle-color': 'transparent',
+      'circle-stroke-width': 1,
+      'circle-stroke-color': '#00B0FF', // Cyber Blue for Observation Zone
+      'circle-stroke-opacity': 0.4
+    }
+  }, 'user-marker');
+
   map.addLayer({
     id: 'ring-15km',
     type: 'circle',
@@ -97,14 +243,14 @@ function drawSafetyRings() {
       'circle-radius': [
         'interpolate', ['exponential', 2], ['zoom'],
         0, 0,
-        20, 15000 // приближенное значение пикселей на зуме 20 для 15км
+        20, 15000
       ],
       'circle-color': 'transparent',
       'circle-stroke-width': 2,
       'circle-stroke-color': COLORS.warning,
       'circle-stroke-opacity': 0.5
     }
-  }, 'user-marker'); // Вставляем под маркер пользователя
+  }, 'user-marker');
 
   map.addLayer({
     id: 'ring-5km',
@@ -153,7 +299,8 @@ async function initRainViewer() {
       map.addSource(sourceId, {
         type: 'raster',
         tiles: [`${rvHost}${rvPath[index].path}/256/{z}/{x}/{y}/${RADAR_COLORS}/${RADAR_SMOOTH}_${RADAR_SNOW}.png`],
-        tileSize: 256
+        tileSize: 256,
+        maxzoom: 7
       });
       
       map.addLayer({
@@ -214,23 +361,37 @@ function toggleRadarAnimation() {
 document.getElementById('btn-radar-play').addEventListener('click', toggleRadarAnimation);
 // -----------------------------
 
+// Функция применения локации на карту
+function applyUserLocation() {
+  if (!map) return;
+  if (map.isStyleLoaded()) {
+    map.setCenter(userLocation);
+    if (map.getSource('user-location')) {
+      map.getSource('user-location').setData(getGeoJSONPoint(userLocation));
+    }
+  } else {
+    map.once('load', () => {
+      map.setCenter(userLocation);
+      if (map.getSource('user-location')) {
+        map.getSource('user-location').setData(getGeoJSONPoint(userLocation));
+      }
+    });
+  }
+}
+
 // Получение геолокации
 function getUserLocation() {
   if (tg.LocationManager && tg.LocationManager.isInited) {
     tg.LocationManager.getLocation((loc) => {
       if (loc) {
         userLocation = [loc.longitude, loc.latitude];
-        map.setCenter(userLocation);
-        map.getSource('user-location').setData(getGeoJSONPoint(userLocation));
+        applyUserLocation();
       }
     });
   } else if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((pos) => {
       userLocation = [pos.coords.longitude, pos.coords.latitude];
-      if (map && map.isStyleLoaded()) {
-        map.setCenter(userLocation);
-        map.getSource('user-location').setData(getGeoJSONPoint(userLocation));
-      }
+      applyUserLocation();
     });
   }
 }
@@ -338,11 +499,19 @@ btnConfirm.addEventListener('click', () => {
     lon: userLocation[0]
   };
   
-  if (tg.sendData) {
+  if (tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.id) {
+    const userId = tg.initDataUnsafe.user.id;
+    fetch('/api/location', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, lat: payload.lat, lon: payload.lon })
+    }).then(() => tg.close()).catch(() => tg.close());
+  } else if (tg.sendData) {
     tg.sendData(JSON.stringify(payload));
+    tg.close();
+  } else {
+    tg.close();
   }
-  // Close the WebApp after sending data
-  tg.close();
 });
 
 // Запуск
@@ -351,4 +520,22 @@ initMap();
 map.on('load', () => {
   initMapEvents();
 });
-getUserLocation();
+
+// Если переданы параметры в URL, используем их
+if (urlParams.has('lat') && urlParams.has('lon')) {
+  // Уже установлено вверху файла
+} else if (tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.id) {
+  // Пытаемся получить с бэкенда
+  fetch(`/api/user/${tg.initDataUnsafe.user.id}/location`)
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data && data.lat) {
+        userLocation = [parseFloat(data.lon), parseFloat(data.lat)];
+        applyUserLocation();
+      } else {
+        getUserLocation();
+      }
+    }).catch(() => getUserLocation());
+} else {
+  getUserLocation();
+}
