@@ -24,9 +24,14 @@ async function deploy() {
         await client.uploadFrom("render.yaml", "render.yaml");
         await client.uploadFrom(".env", ".env");
         
-        // Upload directories
         await client.uploadDir("src", "src");
+        await client.uploadDir("dist", "dist");
         await client.uploadDir("public", "public");
+
+        console.log("Restarting AlwaysData Node app...");
+        const fs = require('fs');
+        fs.writeFileSync('restart.txt', new Date().toISOString());
+        await client.uploadFrom("restart.txt", "tmp/restart.txt");
 
         console.log("FTP Upload complete!");
     }

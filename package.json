@@ -36,7 +36,7 @@
     "@types/express": "^5.0.6",
     "@types/geojson": "^7946.0.16",
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.1.0",
+    "@types/node": "^26.1.2",
     "@types/pg": "^8.20.0",
     "@types/ws": "^8.18.1",
     "archiver": "^8.0.0",

@@ -283,13 +283,13 @@ export async function findUsersInRadiusBatch(strikes: {lat: number, lon: number}
       (
         SELECT COUNT(*)
         FROM strikes s
-        WHERE s.location && ST_Expand(ul.location, 30000) AND ST_DWithin(ul.location, s.location, 30000)
+        WHERE ST_DWithin(ul.location, s.location, 30000)
           AND s.created_at >= NOW() - INTERVAL '15 minutes'
       ) AS "recentStrikesCount"
     FROM users u
     JOIN user_locations ul ON u.id = ul.user_id
     CROSS JOIN batch b
-    WHERE ul.location && ST_Expand(b.geom, ul.alert_radius) AND ST_DWithin(ul.location, b.geom, ul.alert_radius);
+    WHERE ST_DWithin(ul.location, b.geom, ul.alert_radius);
   `;
   const res = await pool.query(query, [multiPointString]);
   const mappedRes = res.rows.map(row => ({
@@ -372,7 +372,7 @@ export async function countStrikesNearUser(userId: number, radiusMeters: number 
   const query = `
     SELECT COUNT(*)::integer as count
     FROM strikes
-    WHERE location && ST_Expand($1::geography, $2) AND ST_DWithin(location, $1, $2)
+    WHERE ST_DWithin(location, $1, $2)
       AND created_at >= NOW() - INTERVAL '24 hours';
   `;
   const countRes = await pool.query(query, [userLocation, radiusMeters]);
@@ -455,7 +455,7 @@ export async function getErrorsCount(
     const lonIdx = params.length - 2;
     const latIdx = params.length - 1;
     const radIdx = params.length;
-    conditions.push(`location && ST_Expand(ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx}) AND ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
+    conditions.push(`ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
   }
 
   const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
@@ -491,7 +491,7 @@ export async function getRecentErrors(
     const lonIdx = params.length - 2;
     const latIdx = params.length - 1;
     const radIdx = params.length;
-    conditions.push(`location && ST_Expand(ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx}) AND ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
+    conditions.push(`ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
   }
 
   const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';

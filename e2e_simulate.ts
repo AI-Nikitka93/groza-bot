@@ -19,6 +19,16 @@ async function run() {
       VALUES ($1, ST_SetSRID(ST_MakePoint(37.6173, 55.7558), 4326)::geography, CURRENT_TIMESTAMP)
       ON CONFLICT (id) DO UPDATE SET location = ST_SetSRID(ST_MakePoint(37.6173, 55.7558), 4326)::geography
     `, [mockUserId]);
+    
+    // Insert mock recent strikes to bypass Anti-Spam
+    await pool.query(`
+      INSERT INTO strikes (location, created_at)
+      VALUES 
+      (ST_SetSRID(ST_MakePoint(37.6174, 55.7559), 4326)::geography, NOW() - INTERVAL '2 minutes'),
+      (ST_SetSRID(ST_MakePoint(37.6175, 55.7560), 4326)::geography, NOW() - INTERVAL '5 minutes'),
+      (ST_SetSRID(ST_MakePoint(37.6176, 55.7561), 4326)::geography, NOW() - INTERVAL '10 minutes')
+    `);
+    
     passPG = true;
     console.log('[E2E] PostgreSQL: PASS');
   } catch (err) {
