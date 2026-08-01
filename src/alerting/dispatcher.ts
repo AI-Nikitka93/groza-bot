@@ -326,7 +326,23 @@ export async function processStrikesBatch(strikes: {lat: number, lon: number}[])
           memoryCache.set(activeKey, now + (45 * 60 * 1000));
           try {
             await redis.set(activeKey, '1', 'EX', 45 * 60);
-          } catch(e) {}
+            
+            // 🔒 STAGE 3 ALL CLEAR: Schedule persistent BullMQ job to monitor when storm leaves
+            await telegramQueue.add('check-all-clear', {
+              userId: Number(u.userId),
+              locationId: u.locationId,
+              locationName: u.locationName,
+              lat: u.lat,
+              lon: u.lon
+            }, {
+              delay: 20 * 60 * 1000, // Check back in 20 minutes
+              jobId: `allclear:${u.userId}:${u.locationId}:${now}`,
+              removeOnComplete: true,
+              removeOnFail: true
+            });
+          } catch(e) {
+            console.error('Failed to schedule check-all-clear job:', e);
+          }
         }
 
         const distKm = (u.distMeters / 1000).toFixed(1);
