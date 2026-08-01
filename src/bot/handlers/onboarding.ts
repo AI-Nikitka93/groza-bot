@@ -10,7 +10,7 @@ export async function handleStart(ctx: Context) {
 Чтобы бот мог вовремя предупредить вас о приближении шторма, укажите вашу точку на карте:`;
 
   await ctx.reply(text, Markup.keyboard([
-    [Markup.button.locationRequest('📍 Отправить геолокацию')],
-    [Markup.button.webApp('🗺 Карта', ENV.WEBAPP_URL)]
+    [Markup.button.text('⚡️ Текущий статус'), Markup.button.webApp('🗺️ Радар', ENV.WEBAPP_URL)],
+    [Markup.button.text('📍 Изменить локацию'), Markup.button.text('❓ Помощь')]
   ]).resize());
 }

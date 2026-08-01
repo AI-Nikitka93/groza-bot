@@ -1,4 +1,4 @@
-import { Telegraf } from 'telegraf';
+import { Telegraf, Markup } from 'telegraf';
 import { ENV } from '../env';
 import { handleStart } from './handlers/onboarding';
 import { handleLocation } from './handlers/location';
@@ -62,6 +62,10 @@ bot.command('location', (ctx) => ctx.reply('Пожалуйста, отправь
 bot.action('change_location', (ctx) => ctx.reply('Пожалуйста, отправьте новую геолокацию:', { reply_markup: { keyboard: [[{ text: '📍 Отправить геолокацию', request_location: true }]], resize_keyboard: true } }));
 bot.on('location', handleLocation);
 bot.on('web_app_data', handleWebAppData);
+
+bot.hears('⚡️ Текущий статус', handleHealth);
+bot.hears('📍 Изменить локацию', (ctx) => ctx.reply('Пожалуйста, отправьте вашу геолокацию:', { reply_markup: { keyboard: [[{ text: '📍 Отправить геолокацию', request_location: true }]], resize_keyboard: true } }));
+bot.hears('❓ Помощь', handleStart);
 
 export async function startBot() {
   const isProd = process.env.NODE_ENV === 'production' || (ENV.WEBAPP_URL && ENV.WEBAPP_URL.includes('alwaysdata.net'));
