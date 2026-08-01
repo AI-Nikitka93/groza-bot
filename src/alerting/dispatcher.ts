@@ -83,18 +83,34 @@ function generateDynamicMessage(
   locationName: string,
   cell?: any
 ): string {
+  const dKm = parseFloat(distKm);
+
+  // UX-Psychology: Hybrid Alert System
   let header = '';
-  let rec = '';
-  switch(level) {
-    case 'extreme': header = '🔴 **Критическая опасность**'; rec = 'Немедленно найдите укрытие!'; break;
-    case 'high': header = '🟠 **Высокая опасность**'; rec = 'Отмените планы на улице и зайдите в помещение.'; break;
-    case 'moderate': header = '🟡 **Умеренная опасность**'; rec = 'Будьте готовы к ухудшению погоды.'; break;
-    case 'observation': header = '🔵 **Наблюдение**'; rec = 'Гроза далеко, но движется в вашу сторону. Ситуация может измениться.'; break;
-    default: header = '🟢 **Низкая опасность**'; rec = ''; break;
+  let warningMessage = '';
+  let survivalTrigger = '';
+  let isExtreme = false;
+  
+  if (level === 'extreme' || dKm <= 3) {
+    isExtreme = true;
+    header = '🔴 **ЭКСТРЕМАЛЬНАЯ УГРОЗА ЖИЗНИ**';
+    warningMessage = '⚡ Шторм прямо над вами! Шутки кончились.';
+    survivalTrigger = '❗ НЕМЕДЛЕННО НАЙДИТЕ УКРЫТИЕ В КАПИТАЛЬНОМ ЗДАНИИ! ОТОЙДИТЕ ОТ ОКОН! ❗';
+  } else if (level === 'high' || dKm <= 10) {
+    header = '🟠 **КРИТИЧЕСКАЯ ОПАСНОСТЬ**';
+    warningMessage = 'Удары молний фиксируются в опасной близости от вашей локации.';
+    survivalTrigger = '⚠️ Отмените все планы на улице и зайдите в помещение!';
+  } else if (level === 'moderate') {
+    header = '🟡 **ШТОРМОВОЕ ПРЕДУПРЕЖДЕНИЕ**';
+    warningMessage = 'Наблюдается формирование или приближение грозового фронта.';
+    survivalTrigger = '💡 Следите за обновлениями и будьте готовы укрыться.';
+  } else {
+    header = '🔵 **ИНФОРМАЦИОННОЕ СООБЩЕНИЕ**';
+    warningMessage = 'Гроза далеко, но может двигаться в вашу сторону.';
+    survivalTrigger = '💡 Ситуация под контролем, продолжаем наблюдение.';
   }
 
-  let text = `${header}\n📍 Локация: ${locationName}\n⚡ Расстояние: ${distKm} км
-`;
+  let text = `${header}\n📍 Локация: ${locationName}\n⚡ Дистанция до ударов: ${distKm} км`;
   
   if (cell && cell.speed_mps > 0 && cell.direction_deg !== undefined && cell.centroid_lat) {
     const speedKmh = Math.round(cell.speed_mps * 3.6);
@@ -107,19 +123,24 @@ function generateDynamicMessage(
     );
     const distMeters = cell.distance_meters || parseFloat(distKm) * 1000;
     
-    text += `\n${trajText}`;
+    text += `\n\n${trajText}`;
     if (speedKmh > 5) {
       text += `\n💨 Скорость фронта: ${speedKmh} км/ч`;
       const etaMins = Math.round((distMeters / (cell.speed_mps || 1)) / 60);
       if (etaMins > 0 && etaMins < 120) {
-        text += `\n⏳ До начала грозы примерно: ${etaMins} минут`;
+        text += `\n⏳ Расчетное время удара (ETA): ${etaMins} минут`;
       }
     }
   } else if (!cell || cell.speed_mps === 0) {
-    text += `\n\n✅ Гроза малоподвижна или формируется.`;
+    text += `\n\n✅ Гроза малоподвижна или формируется над вами.`;
   }
 
-  text += `\n\n📊 Индекс опасности: ${riskEma.toFixed(0)}/100 (${trend})\n🎯 Уверенность прогноза: ${confidence.toFixed(0)}%\n\n💡 Рекомендация: ${rec}`;
+  if (isExtreme) {
+    text += `\n\n${warningMessage}\n\n${survivalTrigger}`;
+  } else {
+    text += `\n\n${warningMessage}\n\n📊 Индекс угрозы: ${riskEma.toFixed(0)}/100 (${trend})\n🎯 Достоверность: ${confidence.toFixed(0)}%\n\n${survivalTrigger}`;
+  }
+  
   return text;
 }
 export async function processStrikesBatch(strikes: {lat: number, lon: number}[]) {
