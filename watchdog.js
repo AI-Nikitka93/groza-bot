@@ -6,9 +6,33 @@ let lastCrashTime = null;
 let crashHistory = [];
 let crashReason = null;
 let watchdogState = 'RUNNING';
+let childProcess = null;
+
+// Graceful shutdown forwarding
+['SIGTERM', 'SIGINT'].forEach(sig => {
+    process.on(sig, () => {
+        console.log(`[WATCHDOG] Received ${sig}, forwarding to child...`);
+        if (childProcess) childProcess.kill(sig);
+        process.exit(0);
+    });
+});
 
 function startProcess() {
+    // Kill any existing orphaned Node processes except this watchdog
+    try {
+        const execSync = require('child_process').execSync;
+        const pids = execSync('pgrep node').toString().trim().split('\\n');
+        const myPid = process.pid.toString();
+        for (let pid of pids) {
+            if (pid && pid !== myPid) {
+                console.log(`[WATCHDOG] Killing orphaned process ${pid}`);
+                try { process.kill(parseInt(pid, 10), 'SIGKILL'); } catch (e) {}
+            }
+        }
+    } catch(e) {}
+
     lastStartTime = Date.now();
+
     watchdogState = 'RUNNING';
     
     // Average restart time calc
@@ -22,7 +46,7 @@ function startProcess() {
     }
 
     console.log(`[STATE] RUNNING Starting Groza bot process... (Attempt: ${restartCount + 1})`);
-    const child = spawn('node', ['--max-old-space-size=512', 'dist/index.js'], {
+    childProcess = spawn('node', ['--max-old-space-size=512', 'dist/index.js'], {
         stdio: 'inherit',
         env: {
             ...process.env,
@@ -34,7 +58,7 @@ function startProcess() {
         }
     });
 
-    child.on('close', (code) => {
+    childProcess.on('close', (code) => {
         const uptime = Date.now() - lastStartTime;
         lastCrashTime = Date.now();
         crashReason = `Exit code ${code}`;

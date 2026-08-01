@@ -22,6 +22,7 @@ async function deploy() {
         await client.uploadFrom("package.json", "package.json");
         await client.uploadFrom("tsconfig.json", "tsconfig.json");
         await client.uploadFrom("render.yaml", "render.yaml");
+        await client.uploadFrom("watchdog.js", "watchdog.js");
         await client.uploadFrom(".env", ".env");
         
         await client.uploadDir("src", "src");
