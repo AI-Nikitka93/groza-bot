@@ -4,7 +4,7 @@ import { handleStart } from './handlers/onboarding';
 import { handleLocation } from './handlers/location';
 import { handleWebAppData } from './handlers/webapp';
 import { handleStats } from './handlers/stats';
-import { handleHealth } from './handlers/health';
+import { handleHealth, handleAdminMetrics } from './handlers/health';
 import { incrementRequestCount } from '../cache/upstash';
 import { getUserLocation, insertErrorLog } from '../db/tembo';
 
@@ -55,7 +55,7 @@ bot.catch(async (err: any, ctx) => {
 
 bot.start(handleStart);
 bot.command('stats', handleStats);
-bot.command('health', handleHealth);
+bot.command('admin_metrics', handleAdminMetrics);
 bot.command('status', handleHealth);
 bot.command('help', handleStart);
 bot.command('location', (ctx) => ctx.reply('Пожалуйста, отправьте вашу геолокацию:', { reply_markup: { keyboard: [[{ text: '📍 Отправить геолокацию', request_location: true }]], resize_keyboard: true } }));

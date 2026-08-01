@@ -1,13 +1,13 @@
 import { Context } from 'telegraf';
 import { MetricsTracker } from '../../observability';
-import { pingDatabase } from '../../db/tembo';
-import { pingRedis } from '../../cache/upstash';
+import { pingDatabase, pool, getUserLocations } from '../../db/tembo';
+import { pingRedis, redis } from '../../cache/upstash';
 import { pingBullMQ, telegramQueue } from '../../alerting/queue';
 import { pingBlitzortung } from '../../weather/lightning_listener';
 
 const ADMIN_ID = process.env.ADMIN_ID ? parseInt(process.env.ADMIN_ID, 10) : null;
 
-export async function handleHealth(ctx: Context) {
+export async function handleAdminMetrics(ctx: Context) {
   if (ADMIN_ID && ctx.from?.id !== ADMIN_ID) {
     return ctx.reply('Forbidden');
   }
@@ -71,4 +71,58 @@ Avg Processing: ${m.averageProcessingTimeMs.toFixed(2)} ms
     text,
     { parse_mode: 'Markdown' }
   );
+}
+
+export async function handleHealth(ctx: Context) {
+  const userId = ctx.from?.id;
+  if (!userId) return;
+
+  const locations = await getUserLocations(userId);
+  const loc = locations.length > 0 ? locations[0] : null;
+
+  if (!loc) {
+    return ctx.reply('Локация не установлена. Отправьте /location для настройки.');
+  }
+
+  const emaKey = `risk:ema:${userId}`;
+  const riskStr = await redis.get(emaKey);
+  const riskIndex = riskStr ? parseFloat(riskStr) : 0;
+
+  let dangerStatus = '🟢 Спокойно';
+  if (riskIndex >= 60) {
+    dangerStatus = '🔴 Опасность';
+  } else if (riskIndex >= 20) {
+    dangerStatus = '🟡 Внимание';
+  }
+
+  let distText = 'Нет данных за 24 часа';
+  try {
+    const query = `
+      SELECT ST_Distance(
+        ST_SetSRID(ST_MakePoint($1, $2), 4326)::geography,
+        location
+      ) as dist
+      FROM strikes
+      WHERE created_at >= NOW() - INTERVAL '24 hours'
+      ORDER BY location <-> ST_SetSRID(ST_MakePoint($1, $2), 4326)::geography
+      LIMIT 1;
+    `;
+    const res = await pool.query(query, [loc.lon, loc.lat]);
+    if (res.rows.length > 0) {
+      const distMeters = res.rows[0].dist;
+      distText = `${(distMeters / 1000).toFixed(1)} км`;
+    }
+  } catch (err) {
+    console.error('Error fetching nearest strike distance:', err);
+  }
+
+  const text = `
+⚡️ *Текущий статус*
+📍 Локация: ${loc.name}
+⚠️ Статус: ${dangerStatus}
+📊 Индекс угрозы: ${riskIndex.toFixed(0)}/100
+📏 Ближайшая молния: ${distText}
+`.trim();
+
+  await ctx.reply(text, { parse_mode: 'Markdown' });
 }

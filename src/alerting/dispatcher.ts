@@ -178,6 +178,9 @@ export async function processStrikesBatch(strikes: {lat: number, lon: number}[])
       }
 
       const cell = await getClosestStormCell(u.lat, u.lon);
+      if (cell && cell.speed_mps !== undefined) {
+        cell.speed_mps = Math.min(cell.speed_mps, 25);
+      }
       
       // --- CALCULATE RISK SCORE (Pure Multiplicative) ---
       const maxRadius = AppConfig.riskModel.maxRadiusMeters || 30000;
@@ -278,6 +281,11 @@ export async function processStrikesBatch(strikes: {lat: number, lon: number}[])
       else if (riskEma >= 60) level = 'high';
       else if (riskEma >= 40) level = 'moderate';
       else if (riskEma >= 20) level = 'observation';
+
+      if (effectiveDistance > 15000 && (level === 'extreme' || level === 'high')) {
+        level = 'moderate';
+      }
+
 
       // Ensure Observation warnings are ONLY sent if moving towards user (Cross-Track check)
       if (level === 'observation' && (!isDirectlyApproaching || u.disable_observation)) {
