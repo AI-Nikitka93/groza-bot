@@ -57,6 +57,9 @@ bot.start(handleStart);
 bot.command('stats', handleStats);
 bot.command('health', handleHealth);
 bot.command('status', handleHealth);
+bot.command('help', handleStart);
+bot.command('location', (ctx) => ctx.reply('Пожалуйста, отправьте вашу геолокацию:', { reply_markup: { keyboard: [[{ text: '📍 Отправить геолокацию', request_location: true }]], resize_keyboard: true } }));
+bot.action('change_location', (ctx) => ctx.reply('Пожалуйста, отправьте новую геолокацию:', { reply_markup: { keyboard: [[{ text: '📍 Отправить геолокацию', request_location: true }]], resize_keyboard: true } }));
 bot.on('location', handleLocation);
 bot.on('web_app_data', handleWebAppData);
 
@@ -66,6 +69,13 @@ export async function startBot() {
   if (ENV.TELEGRAM_BOT_TOKEN) {
     bot.telegram.setChatMenuButton({ menuButton: { type: 'web_app', text: '🗺 Моя локация', web_app: { url: `${ENV.WEBAPP_URL}?v=3` } } })
       .catch(err => console.error('Failed to set chat menu button:', err));
+
+    bot.telegram.setMyCommands([
+      { command: 'start', description: 'Запустить бота' },
+      { command: 'status', description: 'Статус систем' },
+      { command: 'location', description: 'Сменить локацию' },
+      { command: 'help', description: 'Помощь' }
+    ]).catch(err => console.error('Failed to set bot commands:', err));
 
     if (isProd) {
       console.log('Telegram bot is running in WEBHOOK mode on Alwaysdata.');

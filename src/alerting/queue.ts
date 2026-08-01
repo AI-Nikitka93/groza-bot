@@ -53,7 +53,10 @@ export const telegramWorker = new Worker('telegram-alerts', async (job) => {
         
         const url = `${ENV.WEBAPP_URL}?lat=${lat}&lon=${lon}&v=${Date.now()}`;
         const reply_markup = {
-          inline_keyboard: [[{ text: '🗺 Открыть радар', web_app: { url } }]]
+          inline_keyboard: [
+            [{ text: '🔄 Обновить радар', web_app: { url } }],
+            [{ text: '📍 Сменить локацию', callback_data: 'change_location' }]
+          ]
         };
         const text = `🟢 Гроза ушла. Угроза миновала.\n📍 Локация: ${locationName}\nИндекс опасности упал до безопасных значений. Вы можете возвращаться к обычным делам.`;
         

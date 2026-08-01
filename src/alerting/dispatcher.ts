@@ -94,7 +94,11 @@ function generateDynamicMessage(
   if (level === 'extreme' || dKm <= 3) {
     isExtreme = true;
     header = '🔴 ЭКСТРЕМАЛЬНАЯ УГРОЗА ЖИЗНИ';
-    warningMessage = '⚡ Шторм прямо над вами! Шутки кончились.';
+    if (dKm <= 1.5) {
+      warningMessage = '⚡ Шторм прямо над вами! Шутки кончились.';
+    } else {
+      warningMessage = '⚠️ Приближается крайне опасный штормовой фронт!';
+    }
     survivalTrigger = '❗ НЕМЕДЛЕННО НАЙДИТЕ УКРЫТИЕ В КАПИТАЛЬНОМ ЗДАНИИ! ОТОЙДИТЕ ОТ ОКОН! ❗';
   } else if (level === 'high' || dKm <= 10) {
     header = '🟠 КРИТИЧЕСКАЯ ОПАСНОСТЬ';
@@ -123,16 +127,22 @@ function generateDynamicMessage(
     );
     const distMeters = cell.distance_meters || parseFloat(distKm) * 1000;
     
-    text += `\n\n${trajText}`;
+    if (dKm > 1.5) {
+      text += `\n\n${trajText}`;
+    }
     if (speedKmh > 5) {
-      text += `\n💨 Скорость фронта: ${speedKmh} км/ч`;
+      text += (dKm > 1.5 ? `\n` : `\n\n`) + `💨 Скорость фронта: ${speedKmh} км/ч`;
       const etaMins = Math.round((distMeters / (cell.speed_mps || 1)) / 60);
-      if (etaMins > 0 && etaMins < 120) {
+      if (etaMins > 0 && etaMins < 120 && dKm > 1.5) {
         text += `\n⏳ Расчетное время удара (ETA): ${etaMins} минут`;
       }
     }
   } else if (!cell || cell.speed_mps === 0) {
-    text += `\n\n✅ Гроза малоподвижна или формируется над вами.`;
+    if (dKm > 1.5) {
+      text += `\n\n✅ Гроза малоподвижна или формируется вблизи вас.`;
+    } else {
+      text += `\n\n✅ Гроза малоподвижна или формируется прямо над вами.`;
+    }
   }
 
   if (isExtreme) {
@@ -368,7 +378,8 @@ export async function processStrikesBatch(strikes: {lat: number, lon: number}[])
         const url = `${ENV.WEBAPP_URL}?lat=${u.lat}&lon=${u.lon}&v=${Date.now()}`;
         const reply_markup = {
           inline_keyboard: [
-            [{ text: '🗺 Открыть радар', web_app: { url } }]
+            [{ text: '🔄 Обновить радар', web_app: { url } }],
+            [{ text: '📍 Сменить локацию', callback_data: 'change_location' }]
           ]
         };
 
