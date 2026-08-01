@@ -5,10 +5,12 @@ import { pingRedis, redis } from '../../cache/upstash';
 import { pingBullMQ, telegramQueue } from '../../alerting/queue';
 import { pingBlitzortung } from '../../weather/lightning_listener';
 
-const ADMIN_ID = process.env.ADMIN_ID ? parseInt(process.env.ADMIN_ID, 10) : null;
+const ADMIN_IDS = process.env.ADMIN_ID 
+  ? process.env.ADMIN_ID.split(',').map(id => parseInt(id.trim(), 10)).filter(id => !isNaN(id)) 
+  : [];
 
 export async function handleAdminMetrics(ctx: Context) {
-  if (ADMIN_ID && ctx.from?.id !== ADMIN_ID) {
+  if (ADMIN_IDS.length > 0 && ctx.from?.id && !ADMIN_IDS.includes(ctx.from.id)) {
     return ctx.reply('Forbidden');
   }
 
