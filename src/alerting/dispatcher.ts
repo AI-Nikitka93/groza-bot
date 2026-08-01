@@ -277,18 +277,20 @@ export async function processStrikesBatch(strikes: {lat: number, lon: number}[])
         const trackId = u.cell?.track_id || 'default_track';
         // 🔒 STAGE 1 DEDUPLICATION: Atomic Redis lock for (userId + locationId + trackId + dangerLevel)
         const tupleDedupKey = `alert:dedup:${u.userId}:${u.locationId}:${trackId}:${level}`;
+        
+        const now = Date.now();
+        const localExpiry = memoryCache.get(tupleDedupKey);
+        if (localExpiry && now <= localExpiry) {
+           continue; // Deduplicated locally before hitting Redis
+        }
+        memoryCache.set(tupleDedupKey, now + (ALERT_COOLDOWN_SEC * 1000));
+
         let isAcquired = false;
         try {
           const res = await redis.set(tupleDedupKey, '1', 'EX', ALERT_COOLDOWN_SEC, 'NX');
           isAcquired = !!res;
         } catch (e) {
-          // In-memory fallback
-          const now = Date.now();
-          const expiry = memoryCache.get(tupleDedupKey);
-          if (!expiry || now > expiry) {
-            memoryCache.set(tupleDedupKey, now + (ALERT_COOLDOWN_SEC * 1000));
-            isAcquired = true;
-          }
+          isAcquired = true; // Local memory cache already set, fallback to true
         }
         
         if (!isAcquired) {
@@ -297,9 +299,14 @@ export async function processStrikesBatch(strikes: {lat: number, lon: number}[])
         }
 
         // Active notification tracking for All Clear service
-        try {
-          await redis.set(`alert:active:${u.userId}:${u.locationId}`, '1', 'EX', 45 * 60);
-        } catch(e) {}
+        const activeKey = `alert:active:${u.userId}:${u.locationId}`;
+        const activeExpiry = memoryCache.get(activeKey);
+        if (!activeExpiry || now > activeExpiry) {
+          memoryCache.set(activeKey, now + (45 * 60 * 1000));
+          try {
+            await redis.set(activeKey, '1', 'EX', 45 * 60);
+          } catch(e) {}
+        }
 
         const distKm = (u.distMeters / 1000).toFixed(1);
         const text = generateDynamicMessage(level, distKm, u.density, u.lat, u.lon, u.riskEma, u.trendText, u.confidence, u.locationName, u.cell);

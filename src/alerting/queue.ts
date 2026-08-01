@@ -53,6 +53,10 @@ export const telegramWorker = new Worker('telegram-alerts', async (job) => {
   limiter: {
     max: 25,
     duration: 1000,
+  },
+  settings: {
+    stalledInterval: 300000, // 5 minutes instead of 30 seconds
+    drainDelay: 10000 // 10 seconds polling instead of 5
   }
 });
 

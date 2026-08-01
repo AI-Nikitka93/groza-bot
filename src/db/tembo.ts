@@ -244,6 +244,8 @@ export async function deleteUserLocation(userId: number, locationId: number): Pr
   return (res.rowCount || 0) > 0;
 }
 
+const usersInRadiusCache = new Map<string, { expire: number, data: any[] }>();
+
 export async function findUsersInRadiusBatch(strikes: {lat: number, lon: number}[]): Promise<any[]> {
   // Валидация координат для предотвращения падений PostGIS при парсинге
   const validStrikes = strikes.filter(s => 
@@ -253,6 +255,15 @@ export async function findUsersInRadiusBatch(strikes: {lat: number, lon: number}
   if (validStrikes.length === 0) return [];
   
   const multiPointString = `MULTIPOINT(${validStrikes.map(s => `${s.lon} ${s.lat}`).join(', ')})`;
+  
+  // Local LRU cache check
+  const cacheKey = validStrikes.map(s => `${s.lat.toFixed(2)}:${s.lon.toFixed(2)}`).sort().join('|');
+  const now = Date.now();
+  const cached = usersInRadiusCache.get(cacheKey);
+  if (cached && now < cached.expire) {
+    return cached.data;
+  }
+
   const query = `
     WITH batch AS (
       SELECT ST_GeomFromText($1, 4326)::geography AS geom
@@ -272,16 +283,16 @@ export async function findUsersInRadiusBatch(strikes: {lat: number, lon: number}
       (
         SELECT COUNT(*)
         FROM strikes s
-        WHERE ST_DWithin(ul.location, s.location, 30000)
+        WHERE s.location && ST_Expand(ul.location, 30000) AND ST_DWithin(ul.location, s.location, 30000)
           AND s.created_at >= NOW() - INTERVAL '15 minutes'
       ) AS "recentStrikesCount"
     FROM users u
     JOIN user_locations ul ON u.id = ul.user_id
     CROSS JOIN batch b
-    WHERE ST_DWithin(ul.location, b.geom, ul.alert_radius);
+    WHERE ul.location && ST_Expand(b.geom, ul.alert_radius) AND ST_DWithin(ul.location, b.geom, ul.alert_radius);
   `;
   const res = await pool.query(query, [multiPointString]);
-  return res.rows.map(row => ({
+  const mappedRes = res.rows.map(row => ({
     userId: row.userId.toString(),
     locationId: row.locationId,
     locationName: row.locationName,
@@ -295,6 +306,15 @@ export async function findUsersInRadiusBatch(strikes: {lat: number, lon: number}
     distance: Number(row.distance),
     recentStrikesCount: Number(row.recentStrikesCount)
   }));
+  
+  // LRU cache maintenance
+  if (usersInRadiusCache.size > 1000) {
+    const oldestKey = usersInRadiusCache.keys().next().value;
+    if (oldestKey !== undefined) usersInRadiusCache.delete(oldestKey);
+  }
+  usersInRadiusCache.set(cacheKey, { expire: now + 60000, data: mappedRes });
+  
+  return mappedRes;
 }
 
 export async function getAllUsers(): Promise<{id: number, lat: number, lon: number}[]> {
@@ -352,7 +372,7 @@ export async function countStrikesNearUser(userId: number, radiusMeters: number 
   const query = `
     SELECT COUNT(*)::integer as count
     FROM strikes
-    WHERE ST_DWithin(location, $1, $2)
+    WHERE location && ST_Expand($1::geography, $2) AND ST_DWithin(location, $1, $2)
       AND created_at >= NOW() - INTERVAL '24 hours';
   `;
   const countRes = await pool.query(query, [userLocation, radiusMeters]);
@@ -435,7 +455,7 @@ export async function getErrorsCount(
     const lonIdx = params.length - 2;
     const latIdx = params.length - 1;
     const radIdx = params.length;
-    conditions.push(`ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
+    conditions.push(`location && ST_Expand(ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx}) AND ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
   }
 
   const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
@@ -471,7 +491,7 @@ export async function getRecentErrors(
     const lonIdx = params.length - 2;
     const latIdx = params.length - 1;
     const radIdx = params.length;
-    conditions.push(`ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
+    conditions.push(`location && ST_Expand(ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx}) AND ST_DWithin(location, ST_SetSRID(ST_MakePoint($${lonIdx}, $${latIdx}), 4326)::geography, $${radIdx})`);
   }
 
   const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
