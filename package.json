@@ -34,11 +34,14 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/geojson": "^7946.0.16",
+    "@types/jest": "^30.0.0",
     "@types/node": "^26.1.0",
     "@types/pg": "^8.20.0",
     "@types/ws": "^8.18.1",
     "archiver": "^8.0.0",
     "esbuild": "^0.28.1",
+    "jest": "^30.4.2",
+    "ts-jest": "^29.4.12",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   }
