@@ -1,4 +1,0 @@
-groza-bot.alwaysdata.net 66.249.92.36 - - [08/Jul/2026:12:23:56 +0200] "GET /api/debug-env HTTP/1.1" 200 144 "-" "Google-Jetski-Antigravity" https 3.772347
-groza-bot.alwaysdata.net 93.125.107.12 - - [08/Jul/2026:12:24:24 +0200] "POST /api/telegram-webhook-8516017309 HTTP/1.1" 200 0 "-" "curl/8.19.0" https 0.019763
-groza-bot.alwaysdata.net 66.249.92.36 - - [08/Jul/2026:12:24:38 +0200] "GET /api/monitoring/stats?hours=48 HTTP/1.1" 200 4720 "-" "Google-Jetski-Antigravity" https 0.690066
-groza-bot.alwaysdata.net 93.125.107.12 - - [08/Jul/2026:12:25:06 +0200] "POST /api/telegram-webhook-8516017309 HTTP/1.1" 200 0 "-" "node" https 0.002302
