@@ -7,10 +7,16 @@
   # Groza Telemetry Bot
   
   **Real-time lightning telemetry, anomaly filtering, and zero-typing alerts.**
+
+  [🇷🇺 Читать на русском](README.ru.md)
   
   [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](#)
   [![Stack: Node.js & TypeScript](https://img.shields.io/badge/Stack-Node.js%20%7C%20TypeScript-3178C6)](https://www.typescriptlang.org/)
   [![Infra: Redis + BullMQ](https://img.shields.io/badge/Infra-Redis%20%7C%20BullMQ-DC382D)](https://redis.io/)
+
+  <br>
+
+  **[🚀 Try the Bot in Telegram](https://t.me/YOUR_BOT_USERNAME)**
 </div>
 
 ---
