@@ -95,22 +95,26 @@ export async function handleHealth(ctx: Context) {
     dangerStatus = '🟡 Внимание';
   }
 
-  let distText = 'Нет данных за 24 часа';
+  let distText = '📏 Активных молний рядом нет (за последний час)';
   try {
     const query = `
       SELECT ST_Distance(
         ST_SetSRID(ST_MakePoint($1, $2), 4326)::geography,
         location
-      ) as dist
+      ) as dist,
+      EXTRACT(EPOCH FROM (NOW() - created_at)) as age_seconds
       FROM strikes
-      WHERE created_at >= NOW() - INTERVAL '24 hours'
+      WHERE created_at >= NOW() - INTERVAL '60 minutes'
       ORDER BY location <-> ST_SetSRID(ST_MakePoint($1, $2), 4326)::geography
       LIMIT 1;
     `;
     const res = await pool.query(query, [loc.lon, loc.lat]);
     if (res.rows.length > 0) {
       const distMeters = res.rows[0].dist;
-      distText = `${(distMeters / 1000).toFixed(1)} км`;
+      if (distMeters <= 30000) {
+        const ageSeconds = res.rows[0].age_seconds;
+        distText = `📏 Ближайшая молния: ${(distMeters / 1000).toFixed(1)} км (${Math.floor(ageSeconds / 60)} мин. назад)`;
+      }
     }
   } catch (err) {
     console.error('Error fetching nearest strike distance:', err);
@@ -121,7 +125,7 @@ export async function handleHealth(ctx: Context) {
 📍 Локация: ${loc.name}
 ⚠️ Статус: ${dangerStatus}
 📊 Индекс угрозы: ${riskIndex.toFixed(0)}/100
-📏 Ближайшая молния: ${distText}
+${distText}
 `.trim();
 
   await ctx.reply(text, { parse_mode: 'Markdown' });
